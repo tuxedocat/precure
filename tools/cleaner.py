@@ -39,9 +39,11 @@ re_caption = re.compile(r'((Table)|(Figure)\s{1,3}\d{1,3}\s{1,3}:{1})+')
 re_num = re.compile(r'\d{1}')
 re_scattered = re.compile(r'([a-zA-Z]{1}\s{1}[a-zA-Z]{1}\s{1}){2,}') # e.g. :' M a c h i n e translation' will be matched
 re_head = re.compile(r'^([A-Za-z0-9])')
+re_tip = re.compile(r'\.$')
+re_url = re.compile(r'(:\s?/\s?/)')
 
 
-def notable(line):
+def notabs(line):
     if not re_table.findall(line) : return True
     else: return False
 
@@ -66,13 +68,13 @@ def nospaces(line):
     else: return False
 
 
-def noshortsent(line):
+def not_tooshort(line):
     if len(line.split()) > 7: return True
     else: return False
 
 
-def startswith_valid(line):
-    if re_head.match(line):return True
+def starts_ends_with_valid(line):
+    if re_head.match(line) and re_tip.search(line):return True
     else: return False
 
 
@@ -92,19 +94,13 @@ def is_not_numbers(line):
     else: return True
 
 
-def is_all_ok(line):
-    if notable(line) and noscore(line) and nospaces(line) and noshortsent(line) and startswith_valid(line) \
-            and is_not_scattered(line) and is_not_caption(line) and is_not_numbers(line): return True
-    else: return False
-
-
 def is_references(line):
     if re_Ref.match(line): return True
     else: return False
 
 
 def is_not_caption(line):
-    if not re_caption.match(line) and '.' in line: return True
+    if not re_caption.match(line) and not re_url.search(line): return True
     else: return False
 
 
@@ -113,10 +109,17 @@ def is_not_line_startswith_num(line):
     else: return False
 
 
+def is_all_ok(line):
+    if  notabs(line) and noscore(line) and nospaces(line) and not_tooshort(line) and starts_ends_with_valid(line) \
+            and is_not_scattered(line) and is_not_caption(line) and is_not_numbers(line): return True
+    else: return False
+
+
 #------------------------------------------------------------------------------
 
 def filter(inputfile, outfile_prefix):
     affiliation = []
+    body_i = 10
     with open(inputfile, 'r') as infile:
         source = infile.readlines()
         for i, item in enumerate(source):
@@ -128,9 +131,9 @@ def filter(inputfile, outfile_prefix):
     outlist = []
     for i, line in enumerate(source[body_i:]):
         try:
-            line.encode('ascii')
-            if is_references(line):
+            if is_references(line):  # References is omitted
                 break
+            line.encode('ascii')     # lines with ASCII characters are passed
             if is_all_ok(line):
                 outlist.append(line)
         except UnicodeError:
