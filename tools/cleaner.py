@@ -10,7 +10,11 @@ from Bergsma et.al 2012,
 * remove footnotes, table, figure's caption
 * remove lines with non-ASCII chars
 
+And some features are added...
+* remove lines without period (mostly they are contents of tables)
+* remove lines starting with symbols (same as above) 
 '''
+
 __author__ = "Yu Sawai"
 __copyright__ = "Copyright 2012, tuxedocat"
 __maintainer__ = "Yu Sawai"
@@ -19,10 +23,11 @@ __status__ = "Prototype"
 
 
 import logging
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
 import re
 import os
 import sys
-import time
+
 
 re_table = re.compile(r'(\t{1,})')
 re_numnum = re.compile(r'(\d{2,})')
@@ -34,6 +39,7 @@ re_caption = re.compile(r'((Table)|(Figure)\s{1,3}\d{1,3}\s{1,3}:{1})+')
 re_num = re.compile(r'\d{1}')
 re_scattered = re.compile(r'([a-zA-Z]{1}\s{1}[a-zA-Z]{1}\s{1}){2,}') # e.g. :' M a c h i n e translation' will be matched
 re_head = re.compile(r'^([A-Za-z0-9])')
+
 
 def notable(line):
     if not re_table.findall(line) : return True
@@ -77,12 +83,14 @@ def is_not_scattered(line):
     if not re_scattered.search(line): return True
     else: return False
 
+
 def is_not_numbers(line):
     '''
     Detect line with too many numbers (assuming it would be a caption or content of table)
     '''
     if len(re_num.findall(line)) > 7: return False
     else: return True
+
 
 def is_all_ok(line):
     if notable(line) and noscore(line) and nospaces(line) and noshortsent(line) and startswith_valid(line) \
@@ -99,10 +107,13 @@ def is_not_caption(line):
     if not re_caption.match(line) and '.' in line: return True
     else: return False
 
+
 def is_not_line_startswith_num(line):
     if not line.startswith('numberstring') and not line.startswith('numberstring', 5): return True
     else: return False
 
+
+#------------------------------------------------------------------------------
 
 def filter(inputfile, outfile_prefix):
     affiliation = []
@@ -131,6 +142,7 @@ def filter(inputfile, outfile_prefix):
 
 
 def main():
+    import time
     usage = '''
     Usage:
     $ python cleaner.py inputfile outfile_prefix
