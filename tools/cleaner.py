@@ -69,7 +69,7 @@ def nospaces(line):
 
 
 def not_tooshort(line):
-    if len(line.split()) > 7: return True
+    if len(line.split()) > 5 and len(line) > 30: return True
     else: return False
 
 
