@@ -67,7 +67,7 @@ public class SimpleParseClient {
 		SimpleParseClient client = new SimpleParseClient("127.0.0.1", portNumber);
 		
 	       	int id = 0;
-		if ((args.length -1 ) %2 != 2){
+		if ((args.length -1 ) %2 != 0){
 		      throw new RuntimeException("Invalid argument number!");
 		};
 
