@@ -65,17 +65,19 @@ public class SimpleParseClient {
 	public static void main(String[] args) throws Exception {
 		int portNumber = Integer.parseInt(args[0]);
 		SimpleParseClient client = new SimpleParseClient("127.0.0.1", portNumber);
-		
+	/*	
 	       	int id = 0;
 		if ((args.length -1 ) %2 != 0){
 		      throw new RuntimeException("Invalid argument number!");
 		};
-
-		int docnum = (args.length -1 )/2;
+*/
+		//int docnum = (args.length -1 )/2;
+		int docnum = args.length -1;
 			for (int j=0; j<docnum; ++j){
 				// Open File //
-				FileReader in = new FileReader(args[j*2-1]);
-				FileWriter fw = new FileWriter(args[j*2]);
+				FileReader in = new FileReader(args[j+1]);
+				//FileWriter fw = new FileWriter(args[j*2+2]);
+				FileWriter fw = new FileWriter(args[j+1] + ".parsed");
 				BufferedReader br = new BufferedReader(in);
 				String line;
 				while ((line = br.readLine()) != null) {
@@ -108,13 +110,14 @@ public class SimpleParseClient {
 									+ "\t" + (srlArc==null?"_":srlArc.getHead().getIndex()));
 							fw.write("\n");
 						}
+						fw.write("\n");
 					}
 				};
 				br.close();
 				in.close();
 				fw.close();
 			}
-
+        // System.out.println("Waaaa");
 		client.closeClient();
 	}
 	
