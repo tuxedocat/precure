@@ -13,14 +13,15 @@
 
 	<meta name="viewport" content="width=device-width">
 
-	<link rel="stylesheet/less" href="less/style.less">
+<!-- 	<link rel="stylesheet/less" href="less/style.less">
 	<script src="js/libs/less-1.3.0.min.js"></script>
-	
-	<!-- Use SimpLESS (Win/Linux/Mac) or LESS.app (Mac) to compile your .less files
+ -->
+	<!-- 
+	Use SimpLESS (Win/Linux/Mac) or LESS.app (Mac) to compile your .less files
 	to style.css, and replace the 2 lines above by this one:
-
+ -->
 	<link rel="stylesheet" href="less/style.css">
-	 -->
+	
 
 	<script src="js/libs/modernizr-2.5.3-respond-1.1.0.min.js"></script>
 </head>
@@ -39,6 +40,7 @@
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
+              <li><a href="#precure">Try!</a></li>
               <li><a href="#about">About</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
@@ -51,31 +53,56 @@
 
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit">
-        <h1>コーパスが、<br>その英語はなんか少し変だよ<br>って言ってたよ。</h1>
+        <h1>コーパスが、<br>その英語はなんか少し変かも...<br>って言ってたんだけど、どうする?</h1>
         <p>Precureは学術論文の英語添削のためのアプリケーションです。</p>
         <p>英文中のPredicates(述語)の用例をコーパスから得た統計的特徴量によって推薦します。</p>
         <p>この日本語もちょっと変だよ!!!</p>
-        <p><a class="btn btn-primary btn-large">Try it now!! &raquo;</a></p>
+        <p><a class="btn btn-primary btn-large" href="#precure">Try it now!! &raquo;</a></p>
       </div>
 
       <!-- Example row of columns -->
       <div class="row">
         <div class="span4">
-          <h2>Heading</h2>
-           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
+          <h2>About</h2>
+           <p>本プロジェクトの背景と目的など。</p>
+          <p><a class="btn" href="#about">View details &raquo;</a></p>
         </div>
         <div class="span4">
-          <h2>Heading</h2>
-           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
+          <h2>Under the hood</h2>
+           <p>中身の説明。</p>
+          <p><a class="btn" href="#underthehood">View details &raquo;</a></p>
        </div>
         <div class="span4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
+          <h2>Acknowledgement</h2>
+          <p>リソース・データについての謝辞。</p>
+          <p><a class="btn" href="#acknowledgement">View details &raquo;</a></p>
         </div>
       </div>
+
+
+      <div class="page-header">
+        <a><h1 id="precure">Let's try!! <small>Check your English</small></h1></a>
+      </div>
+        <div class="hero-unit">
+          <textarea class="span6" rows="32" ></textarea>
+          <p><a class="btn btn-primary btn-large">Check!! &raquo;</a></p>
+        </div>
+
+      <div class="page-header" id="about">
+        <h1>About <small>Subtext for header</small></h1>
+      </div>
+        <div class="hero-unit">
+          <p>特に言うことなしだお</p>
+          <p><a class="btn btn-primary btn-large" href="#precure">Check!! &raquo;</a></p>
+        </div>
+
+      <div class="page-header" id="underthehood">
+        <h1>Under the hood <small>Subtext for header</small></h1>
+      </div>
+        <div class="hero-unit">
+          <p>特に言うことなしだお</p>
+          <p><a class="btn btn-primary btn-large">Try it now!! &raquo;</a></p>
+        </div>
 
       <hr>
 
@@ -84,6 +111,8 @@
       </footer>
 
     </div> <!-- /container -->
+
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.2.min.js"><\/script>')</script>
 
@@ -92,7 +121,7 @@
 <script src="js/script.js"></script>
 <script>
 	var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-	(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+	(function(d,t){var g=d.createElement(t),s=d.getElementsByTagid(t)[0];
 	g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
 	s.parentNode.insertBefore(g,s)}(document,'script'));
 </script>
