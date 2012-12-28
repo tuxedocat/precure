@@ -9,6 +9,11 @@ import BaseHTTPServer
 
 import responce
 
+import sys
+import os
+import aspell
+# Prerequisite: Install aspell-python from http://wm.ite.pl/proj/aspell-python/index-c.html
+
 
 class Server(BaseHTTPServer.HTTPServer):
 
@@ -20,8 +25,9 @@ class Server(BaseHTTPServer.HTTPServer):
         _SENTENCE_TOKENIZE_MODEL = "tokenizers/punkt/english.pickle"
         self.tokenizer = nltk.data.load(_SENTENCE_TOKENIZE_MODEL) 
 
-#        self.funcs = { 'parse' : self.parse, 'split':self.split}
-        self.funcs = {'split':self.split}
+        self.speller = aspell.Speller('lang', 'en')
+
+        self.funcs = {'split':self.split, 'spell':self.spell}
 
     def __common(self, query, callback, mymethod):
         res = responce.Response()
@@ -50,6 +56,34 @@ class Server(BaseHTTPServer.HTTPServer):
         query = qdict.get('text', None)
         callback = qdict.get('callback', None)
         return self.__common(query, callback, self.__split)
+
+
+
+    def __spell(self, text):
+        assert isinstance(text, unicode)
+
+        out = []
+        from nltk.tokenize import WhitespaceTokenizer
+        for (beg, end) in WhitespaceTokenizer().span_tokenize(text):
+            word = text[beg:end]
+            if word.isalpha():
+                if self.speller.check(word):
+                    pass
+                else:
+                    description = """Spell error:<br />
+                        Candidates : %s""" % self.speller.suggest(word)
+#                    description = """<strong hptip="%s">%s</span>""" % (description, word) #XXX
+                    description = """<strong>%s</span>""" % (word) #XXX
+                    out.append({"begin":beg, "end": end, "type":"spell", "description" : description})
+            else:
+                pass
+        return {u"errors" : out}
+
+    def spell(self, server, *args, **qdict):
+        query = qdict.get('sent', None)
+        callback = qdict.get('callback', None)
+        return self.__common(query, callback, self.__spell)
+
 
 
 
