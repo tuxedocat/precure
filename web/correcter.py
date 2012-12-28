@@ -23,22 +23,13 @@ class Server(BaseHTTPServer.HTTPServer):
 #        self.funcs = { 'parse' : self.parse, 'split':self.split}
         self.funcs = {'split':self.split}
 
-
-    def __split(self, text):
-        assert isinstance(text, unicode)
-        spans = self.tokenizer.span_tokenize(text)
-        return {u"spans" : spans}
-
-    def split(self, server, *args, **qdict):
+    def __common(self, query, callback, mymethod):
         res = responce.Response()
-
-        query = qdict.get('text', None)
-        callback = qdict.get('callback', None)
         if (query):
             res.headers = {"Content-Type" : "text/javascript"}
             out = {}
             if query and len(query)>0:
-                out = self.__split(query)
+                out = mymethod(query)
             if callback:
                 myret = "%s(%s)" % (callback, json.dumps(out))
             else:
@@ -49,4 +40,16 @@ class Server(BaseHTTPServer.HTTPServer):
             res.status_message='Invalid Query format'
             res.set_error_body()
         return res
+
+    def __split(self, text):
+        assert isinstance(text, unicode)
+        spans = self.tokenizer.span_tokenize(text)
+        return {u"spans" : spans}
+
+    def split(self, server, *args, **qdict):
+        query = qdict.get('text', None)
+        callback = qdict.get('callback', None)
+        return self.__common(query, callback, self.__split)
+
+
 
