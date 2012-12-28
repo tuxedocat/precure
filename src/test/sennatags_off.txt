@@ -1,0 +1,252 @@
+       Rockwell	0 8	       NNP	      B-NP	     B-ORG	              -	      B-A0	         O	         O	         O	(S1(S(NP(NP*
+  International	9 22	       NNP	      I-NP	     I-ORG	              -	      I-A0	         O	         O	         O	*
+          Corp.	23 28	       NNP	      E-NP	     E-ORG	              -	      I-A0	         O	         O	         O	*
+             's	29 31	       POS	      B-NP	         O	              -	      I-A0	         O	         O	         O	*)
+          Tulsa	32 37	       NNP	      I-NP	     S-LOC	              -	      I-A0	         O	         O	         O	*
+           unit	38 42	        NN	      E-NP	         O	              -	      E-A0	         O	         O	         O	*)
+           said	43 47	       VBD	      S-VP	         O	           said	       S-V	         O	         O	         O	(VP*
+             it	48 50	       PRP	      S-NP	         O	              -	      B-A1	      S-A0	         O	         O	(SBAR(S(NP*)
+         signed	51 57	       VBD	      S-VP	         O	         signed	      I-A1	       S-V	         O	         O	(VP*
+              a	58 59	        DT	      B-NP	         O	              -	      I-A1	      B-A1	      B-A0	         O	(NP(NP*
+      tentative	60 69	        JJ	      I-NP	         O	              -	      I-A1	      I-A1	      I-A0	         O	*
+      agreement	70 79	        NN	      E-NP	         O	              -	      I-A1	      I-A1	      E-A0	         O	*)
+      extending	80 89	       VBG	      S-VP	         O	      extending	      I-A1	      I-A1	       S-V	         O	(VP*
+            its	90 93	      PRP$	      B-NP	         O	              -	      I-A1	      I-A1	      B-A1	      B-A0	(NP(NP*
+       contract	94 102	        NN	      E-NP	         O	              -	      I-A1	      I-A1	      I-A1	      I-A0	*)
+           with	103 107	        IN	      S-PP	         O	              -	      I-A1	      I-A1	      I-A1	      I-A0	(PP*
+         Boeing	108 114	       NNP	      B-NP	     B-ORG	              -	      I-A1	      I-A1	      I-A1	      I-A0	(NP*
+            Co.	115 118	       NNP	      E-NP	     E-ORG	              -	      I-A1	      I-A1	      I-A1	      E-A0	*)))
+             to	119 121	        TO	      B-VP	         O	              -	      I-A1	      I-A1	      I-A1	         O	(S(VP*
+        provide	122 129	        VB	      E-VP	         O	        provide	      I-A1	      I-A1	      I-A1	       S-V	(VP*
+     structural	130 140	        JJ	      B-NP	         O	              -	      I-A1	      I-A1	      I-A1	      B-A1	(NP(NP*
+          parts	141 146	       NNS	      E-NP	         O	              -	      I-A1	      I-A1	      I-A1	      E-A1	*)
+            for	147 150	        IN	      S-PP	         O	              -	      I-A1	      I-A1	      I-A1	      B-A2	(PP*
+         Boeing	151 157	       NNP	      S-NP	     S-ORG	              -	      I-A1	      I-A1	      I-A1	      I-A2	(NP(NP*
+             's	158 160	       POS	      B-NP	         O	              -	      I-A1	      I-A1	      I-A1	      I-A2	*)
+            747	161 164	        CD	      I-NP	         O	              -	      I-A1	      I-A1	      I-A1	      I-A2	*
+      jetliners	165 174	       NNS	      E-NP	         O	              -	      E-A1	      E-A1	      E-A1	      E-A2	*))))))))))))
+              .	175 176	         .	         O	         O	              -	         O	         O	         O	         O	*))
+
+       Rockwell	0 8	       NNP	      S-NP	     S-PER	              -	      S-A0	         O	         O	(S1(S(NP*)
+           said	9 13	       VBD	      S-VP	         O	           said	       S-V	         O	         O	(VP*
+            the	14 17	        DT	      B-NP	         O	              -	      B-A1	      B-A0	         O	(SBAR(S(NP*
+      agreement	18 27	        NN	      E-NP	         O	              -	      I-A1	      E-A0	         O	*)
+          calls	28 33	       VBZ	      S-VP	         O	          calls	      I-A1	       S-V	         O	(VP*
+            for	34 37	        IN	    S-SBAR	         O	              -	      I-A1	      B-A1	         O	(SBAR*
+             it	38 40	       PRP	      S-NP	         O	              -	      I-A1	      I-A1	      S-A0	(S(NP*)
+             to	41 43	        TO	      B-VP	         O	              -	      I-A1	      I-A1	         O	(VP*
+         supply	44 50	        VB	      E-VP	         O	         supply	      I-A1	      I-A1	       S-V	(VP*
+            200	51 54	        CD	      B-NP	         O	              -	      I-A1	      I-A1	      B-A1	(NP*
+     additional	55 65	        JJ	      I-NP	         O	              -	      I-A1	      I-A1	      I-A1	*
+      so-called	66 75	        JJ	      I-NP	         O	              -	      I-A1	      I-A1	      I-A1	*
+       shipsets	76 84	       NNS	      E-NP	         O	              -	      I-A1	      I-A1	      I-A1	*)
+            for	85 88	        IN	      S-PP	         O	              -	      I-A1	      I-A1	      I-A1	(PP*
+            the	89 92	        DT	      B-NP	         O	              -	      I-A1	      I-A1	      I-A1	(NP*
+         planes	93 99	       NNS	      E-NP	         O	              -	      E-A1	      E-A1	      E-A1	*))))))))))
+              .	100 101	         .	         O	         O	              -	         O	         O	         O	*))
+
+          These	0 5	        DT	      S-NP	         O	              -	      S-A2	         O	         O	(S1(S(NP*)
+        include	6 13	       VBP	      S-VP	         O	        include	       S-V	         O	         O	(VP*
+              ,	14 15	         ,	         O	         O	              -	         O	         O	         O	*
+          among	16 21	        IN	      S-PP	         O	              -	      B-A1	         O	         O	(PP*
+          other	22 27	        JJ	      B-NP	         O	              -	      I-A1	         O	         O	(NP*
+          parts	28 33	       NNS	      E-NP	         O	              -	      I-A1	         O	         O	*))
+              ,	34 35	         ,	         O	         O	              -	      I-A1	         O	         O	*
+           each	36 40	        DT	      B-NP	         O	              -	      I-A1	         O	         O	(NP(NP(NP*
+       jetliner	41 49	        NN	      E-NP	         O	              -	      I-A1	         O	         O	*
+             's	50 52	       POS	      B-NP	         O	              -	      I-A1	         O	         O	*)
+            two	53 56	        CD	      I-NP	         O	              -	      I-A1	         O	         O	*
+          major	57 62	        JJ	      I-NP	         O	              -	      I-A1	         O	         O	*
+      bulkheads	63 72	       NNS	      E-NP	         O	              -	      I-A1	         O	         O	*)
+              ,	73 74	         ,	         O	         O	              -	      I-A1	         O	         O	*
+              a	75 76	        DT	      B-NP	         O	              -	      I-A1	         O	         O	(NP*
+       pressure	77 85	        NN	      I-NP	         O	              -	      I-A1	         O	         O	*
+          floor	86 91	        NN	      E-NP	         O	              -	      I-A1	         O	         O	*)
+              ,	92 93	         ,	         O	         O	              -	      I-A1	         O	         O	*
+         torque	94 100	        NN	      B-NP	         O	              -	      I-A1	         O	         O	(NP*
+            box	101 104	        NN	      E-NP	         O	              -	      I-A1	         O	         O	*)
+              ,	105 106	         ,	         O	         O	              -	      I-A1	         O	         O	*
+          fixed	107 112	       VBN	      S-VP	         O	          fixed	      I-A1	       S-V	         O	(NP(NP*
+        leading	113 120	       VBG	      B-NP	         O	        leading	      I-A1	      B-A1	       S-V	*
+          edges	121 126	       NNS	      E-NP	         O	              -	      I-A1	      E-A1	      S-A0	*)
+            for	127 130	        IN	      S-PP	         O	              -	      I-A1	         O	         O	(PP*
+            the	131 134	        DT	      B-NP	         O	              -	      I-A1	         O	         O	(NP*
+          wings	135 140	       NNS	      E-NP	         O	              -	      I-A1	         O	         O	*)))
+            and	141 144	        CC	         O	         O	              -	      I-A1	         O	         O	*
+             an	145 147	        DT	      B-NP	         O	              -	      I-A1	         O	         O	(NP*
+            aft	148 151	        JJ	      I-NP	         O	              -	      I-A1	         O	         O	*
+           keel	152 156	        NN	      I-NP	         O	              -	      I-A1	         O	         O	*
+           beam	157 161	        NN	      E-NP	         O	              -	      E-A1	         O	         O	*)))
+              .	162 163	         .	         O	         O	              -	         O	         O	         O	*))
+
+          Under	0 5	        IN	      S-PP	         O	              -	         O	      B-A1	  B-AM-LOC	(S1(S(PP*
+            the	6 9	        DT	      B-NP	         O	              -	         O	      I-A1	  I-AM-LOC	(NP*
+       existing	10 18	       VBG	      I-NP	         O	       existing	       S-V	      I-A1	  I-AM-LOC	*
+       contract	19 27	        NN	      E-NP	         O	              -	      S-A1	      E-A1	  E-AM-LOC	*))
+              ,	28 29	         ,	         O	         O	              -	         O	         O	         O	(PRN*
+       Rockwell	30 38	       NNP	      S-NP	     S-PER	              -	         O	      S-A0	         O	(S(NP*)
+           said	39 43	       VBD	      S-VP	         O	           said	         O	       S-V	         O	(VP*))
+              ,	44 45	         ,	         O	         O	              -	         O	         O	         O	*)
+             it	46 48	       PRP	      S-NP	         O	              -	         O	    B-C-A1	      S-A0	(NP*)
+            has	49 52	       VBZ	      B-VP	         O	              -	         O	    I-C-A1	         O	(VP*
+        already	53 60	        RB	      I-VP	         O	              -	         O	    I-C-A1	  S-AM-TMP	(ADVP*)
+      delivered	61 70	       VBN	      E-VP	         O	      delivered	         O	    I-C-A1	       S-V	(VP*
+            793	71 74	        CD	      S-NP	         O	              -	         O	    I-C-A1	      B-A1	(NP(NP*)
+             of	75 77	        IN	      S-PP	         O	              -	         O	    I-C-A1	      I-A1	(PP*
+            the	78 81	        DT	      B-NP	         O	              -	         O	    I-C-A1	      I-A1	(NP*
+       shipsets	82 90	       NNS	      E-NP	         O	              -	         O	    I-C-A1	      E-A1	*)))
+             to	91 93	        TO	      S-PP	         O	              -	         O	    I-C-A1	      B-A2	(PP*
+         Boeing	94 100	       NNP	      S-NP	    S-MISC	              -	         O	    E-C-A1	      E-A2	(NP*))))
+              .	101 102	         .	         O	         O	              -	         O	         O	         O	*))
+
+       Rockwell	0 8	       NNP	      S-NP	     S-PER	              -	      S-A1	(S1(S(NP(NP*)
+              ,	9 10	         ,	         O	         O	              -	         O	*
+          based	11 16	       VBN	      S-VP	         O	          based	       S-V	(VP*
+             in	17 19	        IN	      S-PP	         O	              -	  B-AM-LOC	(PP*
+             El	20 22	       NNP	      B-NP	     B-LOC	              -	  I-AM-LOC	(NP(NP*
+        Segundo	23 30	       NNP	      E-NP	     E-LOC	              -	  I-AM-LOC	*)
+              ,	31 32	         ,	         O	         O	              -	  I-AM-LOC	*
+         Calif.	33 39	       NNP	      S-NP	     S-LOC	              -	  E-AM-LOC	(NP*)
+              ,	40 41	         ,	         O	         O	              -	         O	*))))
+             is	42 44	       VBZ	      S-VP	         O	              -	         O	(VP*
+             an	45 47	        DT	      B-NP	         O	              -	         O	(NP*
+      aerospace	48 57	        NN	      I-NP	         O	              -	         O	(UCP*
+              ,	58 59	         ,	      I-NP	         O	              -	         O	*
+    electronics	60 71	       NNS	      I-NP	         O	              -	         O	*
+              ,	72 73	         ,	      I-NP	         O	              -	         O	*
+     automotive	74 84	        JJ	      I-NP	         O	              -	         O	*
+            and	85 88	        CC	      I-NP	         O	              -	         O	*
+       graphics	89 97	       NNS	      I-NP	         O	              -	         O	*)
+        concern	98 105	        NN	      E-NP	         O	              -	         O	*))
+              .	106 107	         .	         O	         O	              -	         O	*))
+
+          Frank	0 5	       NNP	      B-NP	     B-PER	              -	      B-A1	      B-A0	         O	(S1(S(NP*
+       Carlucci	6 14	       NNP	      I-NP	     I-PER	              -	      I-A1	      I-A0	         O	*
+            III	15 18	       NNP	      E-NP	     E-PER	              -	      E-A1	      E-A0	         O	*)
+            was	19 22	       VBD	      B-VP	         O	              -	         O	         O	         O	(VP*
+          named	23 28	       VBN	      E-VP	         O	          named	       S-V	         O	         O	(VP*
+             to	29 31	        TO	      S-PP	         O	              -	      B-A2	         O	         O	(PP*
+           this	32 36	        DT	      B-NP	         O	              -	      I-A2	         O	         O	(NP(NP*
+telecommunications	37 55	        NN	      I-NP	         O	              -	      I-A2	         O	         O	*
+        company	56 63	        NN	      E-NP	         O	              -	      I-A2	         O	         O	*
+             's	64 66	       POS	      B-NP	         O	              -	      I-A2	         O	         O	*)
+          board	67 72	        NN	      E-NP	         O	              -	      E-A2	         O	         O	*))
+              ,	73 74	         ,	         O	         O	              -	         O	         O	         O	*
+        filling	75 82	       VBG	      S-VP	         O	        filling	  B-AM-ADV	       S-V	         O	(S(VP*
+            the	83 86	        DT	      B-NP	         O	              -	  I-AM-ADV	      B-A1	      B-A1	(NP(NP*
+        vacancy	87 94	        NN	      E-NP	         O	              -	  I-AM-ADV	      I-A1	      E-A1	*)
+        created	95 102	       VBN	      S-VP	         O	        created	  I-AM-ADV	      I-A1	       S-V	(VP*
+             by	103 105	        IN	      S-PP	         O	              -	  I-AM-ADV	      I-A1	      B-A0	(PP*
+            the	106 109	        DT	      B-NP	         O	              -	  I-AM-ADV	      I-A1	      I-A0	(NP(NP*
+          death	110 115	        NN	      E-NP	         O	              -	  I-AM-ADV	      I-A1	      I-A0	*)
+             of	116 118	        IN	      S-PP	         O	              -	  I-AM-ADV	      I-A1	      I-A0	(PP*
+        William	119 126	       NNP	      B-NP	     B-PER	              -	  I-AM-ADV	      I-A1	      I-A0	(NP*
+          Sobey	127 132	       NNP	      E-NP	     E-PER	              -	  I-AM-ADV	      I-A1	      I-A0	*))
+           last	133 137	        JJ	      B-NP	         O	              -	  I-AM-ADV	      I-A1	      I-A0	(NP*
+            May	138 141	       NNP	      E-NP	         O	              -	  E-AM-ADV	      E-A1	      E-A0	*)))))))))
+              .	142 143	         .	         O	         O	              -	         O	         O	         O	*))
+
+            Mr.	0 3	       NNP	      B-NP	     B-PER	              -	      B-A0	(S1(S(NP(NP*
+       Carlucci	4 12	       NNP	      E-NP	     E-PER	              -	      I-A0	*)
+              ,	13 14	         ,	         O	         O	              -	      I-A0	*
+             59	15 17	        CD	      B-NP	         O	              -	      I-A0	(ADJP(NP*
+          years	18 23	       NNS	      E-NP	         O	              -	      I-A0	*)
+            old	24 27	        JJ	    S-ADJP	         O	              -	      I-A0	*)
+              ,	28 29	         ,	         O	         O	              -	      E-A0	*)
+         served	30 36	       VBD	      S-VP	         O	         served	       S-V	(VP*
+             as	37 39	        IN	      S-PP	         O	              -	      B-A1	(PP*
+        defense	40 47	        NN	      B-NP	         O	              -	      I-A1	(NP*
+      secretary	48 57	        NN	      E-NP	         O	              -	      I-A1	*))
+             in	58 60	        IN	      S-PP	         O	              -	      I-A1	(PP*
+            the	61 64	        DT	      B-NP	         O	              -	      I-A1	(NP*
+         Reagan	65 71	       NNP	      I-NP	     S-ORG	              -	      I-A1	*
+ administration	72 86	        NN	      E-NP	         O	              -	      E-A1	*)))
+              .	87 88	         .	         O	         O	              -	         O	*))
+
+             In	0 2	        IN	      S-PP	         O	              -	  B-AM-TMP	(S1(S(PP*
+        January	3 10	       NNP	      S-NP	         O	              -	  E-AM-TMP	(NP*))
+              ,	11 12	         ,	         O	         O	              -	         O	*
+             he	13 15	       PRP	      S-NP	         O	              -	      S-A0	(NP*)
+       accepted	16 24	       VBD	      S-VP	         O	       accepted	       S-V	(VP*
+            the	25 28	        DT	      B-NP	         O	              -	      B-A1	(NP(NP*
+       position	29 37	        NN	      E-NP	         O	              -	      I-A1	*)
+             of	38 40	        IN	      S-PP	         O	              -	      I-A1	(PP*
+           vice	41 45	        NN	      B-NP	         O	              -	      I-A1	(NP(NP*
+       chairman	46 54	        NN	      E-NP	         O	              -	      I-A1	*)
+             of	55 57	        IN	      S-PP	         O	              -	      I-A1	(PP*
+        Carlyle	58 65	       NNP	      B-NP	     B-ORG	              -	      I-A1	(NP(NP*
+          Group	66 71	       NNP	      E-NP	     E-ORG	              -	      I-A1	*)
+              ,	72 73	         ,	         O	         O	              -	      I-A1	*
+              a	74 75	        DT	      B-NP	         O	              -	      I-A1	(NP*
+       merchant	76 84	        NN	      I-NP	         O	              -	      I-A1	*
+        banking	85 92	        NN	      I-NP	         O	              -	      I-A1	*
+        concern	93 100	        NN	      E-NP	         O	              -	      E-A1	*)))))))
+              .	101 102	         .	         O	         O	              -	         O	*))
+
+       SHEARSON	0 8	       NNP	      B-NP	         O	              -	(S1(NP*
+         LEHMAN	9 15	       NNP	      I-NP	     B-ORG	              -	*
+         HUTTON	16 22	       NNP	      I-NP	     I-ORG	              -	*
+            Inc	23 26	       NNP	      E-NP	     E-ORG	              -	*
+              .	27 28	         .	         O	         O	              -	*))
+
+         Thomas	0 6	       NNP	      B-NP	     B-PER	              -	      B-A1	(S1(S(NP(NP*
+             E.	7 9	       NNP	      I-NP	     I-PER	              -	      I-A1	*
+         Meador	10 16	       NNP	      E-NP	     E-PER	              -	      I-A1	*)
+              ,	17 18	         ,	         O	         O	              -	      I-A1	*
+             42	19 21	        CD	      B-NP	         O	              -	      I-A1	(ADJP(NP*
+          years	22 27	       NNS	      E-NP	         O	              -	      I-A1	*)
+            old	28 31	        JJ	    S-ADJP	         O	              -	      I-A1	*)
+              ,	32 33	         ,	         O	         O	              -	      E-A1	*)
+            was	34 37	       VBD	      B-VP	         O	              -	         O	(VP*
+          named	38 43	       VBN	      E-VP	         O	          named	       S-V	(VP*
+      president	44 53	        NN	      S-NP	         O	              -	      B-A2	(S(NP(NP*)
+            and	54 57	        CC	         O	         O	              -	      I-A2	*
+          chief	58 63	        NN	      B-NP	         O	              -	      I-A2	(NP(NP*
+      operating	64 73	       VBG	      I-NP	         O	              -	      I-A2	*
+        officer	74 81	        NN	      E-NP	         O	              -	      I-A2	*)
+             of	82 84	        IN	      S-PP	         O	              -	      I-A2	(PP*
+         Balcor	85 91	       NNP	      B-NP	     B-ORG	              -	      I-A2	(NP(NP*
+            Co.	92 95	       NNP	      E-NP	     E-ORG	              -	      I-A2	*)
+              ,	96 97	         ,	         O	         O	              -	      I-A2	*
+              a	98 99	        DT	      B-NP	         O	              -	      I-A2	(NP(NP*
+         Skokie	100 106	       NNP	      I-NP	     S-LOC	              -	      I-A2	(NAC*
+              ,	107 108	         ,	      I-NP	         O	              -	      I-A2	*
+           Ill.	109 113	       NNP	      I-NP	         O	              -	      I-A2	*
+              ,	114 115	         ,	      I-NP	         O	              -	      I-A2	*)
+     subsidiary	116 126	        NN	      E-NP	         O	              -	      I-A2	*)
+             of	127 129	        IN	      S-PP	         O	              -	      I-A2	(PP*
+           this	130 134	        DT	      B-NP	         O	              -	      I-A2	(NP*
+            New	135 138	       NNP	      I-NP	     B-LOC	              -	      I-A2	*
+           York	139 143	       NNP	      I-NP	     E-LOC	              -	      I-A2	*
+     investment	144 154	        NN	      I-NP	         O	              -	      I-A2	*
+        banking	155 162	        NN	      I-NP	         O	              -	      I-A2	*
+           firm	163 167	        NN	      E-NP	         O	              -	      E-A2	*))))))))))
+              .	168 169	         .	         O	         O	              -	         O	*))
+
+         Balcor	0 6	       NNP	      S-NP	     S-PER	              -	      S-A0	      B-A0	         O	(S1(S(NP(NP*)
+              ,	7 8	         ,	         O	         O	              -	         O	      I-A0	         O	*
+          which	9 14	       WDT	      S-NP	         O	              -	    S-R-A0	      I-A0	         O	(SBAR(WHNP*)
+            has	15 18	       VBZ	      S-VP	         O	            has	       S-V	      I-A0	         O	(S(VP*
+      interests	19 28	       NNS	      S-NP	         O	              -	      B-A1	      I-A0	         O	(NP(NP*)
+             in	29 31	        IN	      S-PP	         O	              -	      I-A1	      I-A0	         O	(PP*
+           real	32 36	        JJ	      B-NP	         O	              -	      I-A1	      I-A0	         O	(NP*
+         estate	37 43	        NN	      E-NP	         O	              -	      E-A1	      I-A0	         O	*))))))
+              ,	44 45	         ,	         O	         O	              -	         O	      E-A0	         O	*)
+           said	46 50	       VBD	      S-VP	         O	           said	         O	       S-V	         O	(VP*
+            the	51 54	        DT	      B-NP	         O	              -	         O	      B-A1	      B-A1	(SBAR(S(NP*
+       position	55 63	        NN	      E-NP	         O	              -	         O	      I-A1	      E-A1	*)
+             is	64 66	       VBZ	      B-VP	         O	              -	         O	      I-A1	         O	(VP*
+          newly	67 72	        RB	      I-VP	         O	              -	         O	      I-A1	  S-AM-TMP	(ADVP*)
+        created	73 80	       VBN	      E-VP	         O	        created	         O	      E-A1	       S-V	(VP*)))))
+              .	81 82	         .	         O	         O	              -	         O	         O	         O	*))
+
+            Mr.	0 3	       NNP	      B-NP	         O	              -	(S1(S(NP*
+         Meador	4 10	       NNP	      E-NP	     S-PER	              -	*)
+            had	11 14	       VBD	      B-VP	         O	              -	(VP*
+           been	15 19	       VBN	      E-VP	         O	              -	(VP*
+      executive	20 29	        JJ	      B-NP	         O	              -	(NP(NP*
+           vice	30 34	        NN	      I-NP	         O	              -	*
+      president	35 44	        NN	      E-NP	         O	              -	*)
+             of	45 47	        IN	      S-PP	         O	              -	(PP*
+         Balcor	48 54	       NNP	      S-NP	     S-LOC	              -	(NP*)))))
+              .	55 56	         .	         O	         O	              -	*))

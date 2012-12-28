@@ -14,115 +14,77 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s',
                     level=logging.DEBUG)
 import os
 import sys
-from pprint import pformat
 from collections import defaultdict
-import cPickle as pickle
+from pprint import pformat
 from numpy import array
+import cPickle as pickle
 import traceback
 from nltk import ngrams as ng
 
 
-
 class FeatureExtractorBase(object):
+    """
+    Extractor for a sentence given as a list of lines
+    """
     nullfeature = {"NULL":1}
-    VE_count = 0
 
-    @classmethod
-    def gen_fn(cls, l=None):
-        return "_".join(l)
-
-    @classmethod
-    def set_col_f(cls):
-        cls.conll_type = "full"
-        cls.col_suf = 1
-        cls.col_pos = 4
-        cls.col_headid = 6
-        cls.col_deprel = 7
-        cls.col_netag = 10
-        cls.col_srlrel = 12 
-        cls.col_srl = 13
-
-    @classmethod
-    def set_col_r(cls):
-        cls.conll_type = "reduced"
-        cls.col_suf = 1
-        cls.col_pos = 2
-        cls.col_headid = 4
-        cls.col_deprel = 3
-        cls.col_netag = 5
-        cls.col_srlrel = 6
-        cls.col_srl = 7
-
-    def __init__(self, tags=[], verb="", v_idx=None):
+    def __init__(self, tags=[]):
         self.features = defaultdict(float)
-        self.v = verb
+        self.col_suf = 0
+        self.col_off_b = None
+        self.col_off_e = None
+        self.col_pos = 1
+        self.col_chk = 2
+        self.col_ner = 3
+        self.col_pre = 4
+        self.col_psg = -1
         try:
-            # for extracting features from parsed data (tab separated dataset in CoNLL like format)
+            # for extracting features from parsed data
+            # (tab separated dataset in CoNLL like format given by SENNA parser)
             self.tags = [t.split("\t") for t in tags if not t is ""]
-            _t = len(self.tags[0])
-            # print "FeatureExtractor: Num of column of tags is %d"%_t
-            if _t == 14:
-                FeatureExtractorBase.set_col_f()
-            elif _t == 8:
-                FeatureExtractorBase.set_col_r()
         except AttributeError, IndexError:
             # for extracting features from tags' list
-            self.tags = tags
-            _t = len(self.tags[0])
-            # print "FeatureExtractor: Num of column of tags is %d"%_t
-            if _t == 14:
-                FeatureExtractorBase.set_col_f()
-            elif _t == 8:
-                FeatureExtractorBase.set_col_r()
+            self.tags = [t for t in tags]
         except:
-            print verb
             print pformat(tags)
             raise
         try:
-            self.SUF = [t[FeatureExtractorBase.col_suf].lower() for t in self.tags]
-            self.POS = [t[FeatureExtractorBase.col_pos] for t in self.tags]
+            if self.is_withoffset(self.tags[0]):
+                self.col_off_b = 1
+                self.col_off_e = 2
+                self.col_pos = 3
+                self.col_chk = 4
+                self.col_ner = 5
+                self.col_pre = 6
+        except:
+            print pformat(tags)
+        try:
+            self.SUF = [t[self.col_suf].strip() for t in self.tags]
+            self.POS = [t[self.col_pos].strip() for t in self.tags]
+            # self.CHK = self.get_chunks(self.tags)
+            self.CHK = self.get_BIEStag(self.col_chk, self.tags)
+            self.NER = self.get_BIEStag(self.col_ner, self.tags)
+            print pformat(self.CHK)
+            print pformat(self.NER)
             self.WL = zip(self.SUF, self.POS)
-            self.v_idx = self._find_verb_idx() if not v_idx else v_idx
-            if self.v_idx is None:
-                FeatureExtractorBase.VE_count += 1
-                raise ValueError
-            else:
-                pass
-                # print "verb is ", tags[self.v_idx]
         except Exception, e:
-            # print pformat(["FeatureExtractor: ", e])
-            # traceback.print_exc(file=sys.stdout)
-            # print tags[0]
-            # print pformat(tags)
-            # logging.debug(pformat(tags))
-            self.features.update(FeatureExtractorBase.nullfeature)
+            raise
+            # self.features.update(FeatureExtractorBase.nullfeature)
 
+    def gen_fn(self, l=None):
+        return "_".join(l)
 
-    def _find_verb_idx(self):
-        verbpos = [idx for idx, sufpos in enumerate(zip(self.SUF, self.POS)) if sufpos[0] == self.v and "VB" in sufpos[1]]
-        if verbpos:
-            return verbpos[0]
-        else:
-            SUF_l = [en.lemma(w) for w in self.SUF]
-            verbpos = [idx for idx, sufpos in enumerate(zip(SUF_l, self.POS)) if sufpos[0] == self.v and "VB" in sufpos[1]]
-            if verbpos:
-                return verbpos[0]
-            else:
-                return None
+    def is_withoffset(self, tag=None):
+        return True if tag[1].isdigit() and tag[2].isdigit() else False
 
-    @classmethod
-    def read_corpusfiles(self, corpuspath=""):
-        """
-        This classmethod reads corpus (pickled files, separated by each verbs)
-        from the given directory, 
-        returns a dictionary for next process
-        """
-        corpusdict = defaultdict(list)
-        raise NotImplementedError
-
-
-    def save_to_file(self):
-        raise NotImplementedError
+    def get_BIEStag(self, col=None, tag=None):
+        _col = [t[col].strip() for t in self.tags]
+        idx_B = [(i, t.split("-")[-1]) for i, t in enumerate(_col) if t.startswith("B")]
+        idx_E = [(i, t.split("-")[-1]) for i, t in enumerate(_col) if t.startswith("E")]
+        idx_S = [(i, t.split("-")[-1]) for i, t in enumerate(_col) if t.startswith("S")]
+        _be = [(t[0][1], t[0][0], t[1][0]) for t in zip(idx_B, idx_E)]
+        _s = [(t[1], t[0], t[0]+1) for t in idx_S]
+        return sorted(_be + _s, key=lambda x:x[1])
 
 
 class SimpleFeatureExtractor(FeatureExtractorBase):
