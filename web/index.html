@@ -24,6 +24,33 @@
 	
 
 	<script src="js/libs/modernizr-2.5.3-respond-1.1.0.min.js"></script>
+
+
+		<!-- TinyMCE -->
+		<script type="text/javascript" src="./js/tinymce/tiny_mce.js"></script>
+		<script type="text/javascript" src="./js/prec.js"></script>
+		<script type="text/javascript">
+			tinyMCE.init({
+				mode : "textareas",
+				theme : "advanced",
+
+				height : "480",
+				content_css : "custom.css",
+				plugins : "print,searchreplace,paste,fullscreen",
+				theme_advanced_buttons1 : "selectall,pastetext,pasteword,"+
+				"separator,separator," +
+				"search,replace," +
+				"charmap,separator," +
+				"print," + 
+				(window.defaultResizableEditor ? ",separator,fullscreen" : ""),
+				theme_advanced_buttons2 : "",
+				theme_advanced_buttons3 : "",
+				theme_advanced_toolbar_location : "top",
+				theme_advanced_toolbar_align : "left",
+			});
+		</script>
+		<!-- /TinyMCE -->
+
 </head>
 <body>
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
@@ -84,8 +111,19 @@
         <a><h1 id="precure">Let's try!! <small>あなたの英語はネイティブっぽいでしょうか?</small></h1></a>
       </div>
         <div class="hero-unit">
-          <textarea class="span6" rows="32" style="width:100%;"></textarea>
-          <p><a class="btn btn-primary btn-large">Check!! &raquo;</a></p>
+
+		<form method="post" action="">
+		<textarea id="elm1" name="elm1" rows="15" cols="80" style="width: 100%">
+			&lt;p&gt;
+				This is some example text that you can edit inside the &lt;strong&gt;TinyMCE editor&lt;/strong&gt;.
+			&lt;/p&gt;
+		</textarea>
+		</form>
+		<script type="text/javascript">
+		if (document.location.protocol == 'file:') {
+			alert("The examples might not work properly on the local file system due to security settings in your browser. Please use a real webserver.");
+		}
+		</script>
         </div>
 
       <div class="page-header" id="about">
