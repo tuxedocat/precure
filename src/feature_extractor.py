@@ -70,6 +70,11 @@ class SentenceFeatures(object):
             raise
 
 
+    def getfeatures(self):
+        self.bow()
+        self.length()
+        return self.features
+
     def gen_fn(self, l=None):
         return "_".join(l)
 
