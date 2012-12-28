@@ -9,11 +9,32 @@ function myOnSetupContent(editor_id, body, doc) {
 }
 
 
+var SPELL_ERRORS = [];
+function spell_check(_text) {
+	$.ajax({
+		url: '/spell',
+		type: 'GET',
+		data: {
+			sent : _text,
+		},
+		dataType: 'json'
+		})
+		.success(function( data ) {
+			SPELL_ERRORS = data.errors;
+		})
+		.error(function( data ) {
+		})
+		.complete(function( data ) {
+		});
+	return SPELL_ERRORS;
+};
+
+
 var SPANS = {spans : []}
 function split_text(_text) {
 	$.ajax({
 		url: '/split',
-		type: 'POST',
+		type: 'GET',
 		data: {
 			text : _text,
 		},
@@ -32,13 +53,16 @@ function split_text(_text) {
 
 function myHandleEvent(e) {
 
-	txt = tinyMCE.get('elm1').getContent({format:'text'});
+	var ed = tinyMCE.get('elm1');
+	txt = ed.getContent({format:'text'});
+
 
 	if (myBuffer != txt){ //text is changed
 		myBuffer = txt;
 		tmp = new Array(0);
+		tmpMod = new Array(0);
 		spans = split_text(txt);
-		for (var i=0; i<spans.length; ++i){
+		for (var i=spans.length-1; i>=0 ; --i){
 			beg = spans[i][0];
 			end = spans[i][1];
 			str = txt.substr(beg, end-  beg + 1)
@@ -49,10 +73,34 @@ function myHandleEvent(e) {
 					){
 			}
 			else{
-				//XXX do something
-				console.log(myline);
+				var spell_errors = spell_check(txt);
+				for (var j=0; j<spell_errors.length; ++j){
+					var err = spell_errors[j];
+					_info = [beg + err.begin, beg+err.end, err.description];
+					tmpMod.unshift(_info);
+				};
 			};
 		};
+		//replace! Do from the last
+		newtxt = txt
+		for (var j=0; j<tmpMod.length; ++j){
+			var _info = tmpMod[j];
+			beg = _info[0];
+			end = _info[1];
+			html = _info[2];
+
+			newtxt = newtxt.substr(0, beg) 
+				+ html 
+				+ newtxt.substr(end)
+		};
+
+	
+	 var bm = tinyMCE.activeEditor.selection.getBookmark(2);
+//         var bm = tinyMCE.activeEditor.selection.getBookmark(2, true);
+	 tinyMCE.activeEditor.setContent(newtxt);
+	 tinyMCE.activeEditor.selection.moveToBookmark(bm);
+
+		console.log(newtxt);	
 		mySentBuffer = tmp;
 	};
 
