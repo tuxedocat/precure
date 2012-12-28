@@ -3,12 +3,13 @@
 from __future__ import division
 '''
 precure/src/feature_extractor.py
-Created on 28 Dec. 2012
 '''
-__author__ = "Yu Sawai"
-__version__ = "0"
-__licence__ = ""
-__status__ = "Prototyping"
+__author__ = 'Yu SAWAI'
+__version__ = ""
+__copyright__ = ""
+__license__ = "GPL v3"
+__descripstion__ = ""
+__usage__ = ""
 
 from datetime import datetime
 import logging
@@ -34,8 +35,7 @@ class SentenceFeatures(object):
     def __init__(self, tags=[]):
         self.features = defaultdict(float)
         self.col_suf = 0
-        self.col_off_b = None
-        self.col_off_e = None
+        self.col_offset = None
         self.col_pos = 1
         self.col_chk = 2
         self.col_ner = 3
@@ -44,7 +44,7 @@ class SentenceFeatures(object):
         try:
             # for extracting features from parsed data
             # (tab separated dataset in CoNLL like format given by SENNA parser)
-            self.tags = [t.split("\t") for t in tags if not t is ""]
+            self.tags = [[s.strip() for s in t.split("\t")] for t in tags if not t is ""]
         except AttributeError, IndexError:
             # for extracting features from tags' list
             self.tags = [t for t in tags]
@@ -61,10 +61,11 @@ class SentenceFeatures(object):
         else:
             self.OFFSET = None
         try:
-            self.SUF = [t[self.col_suf].strip() for t in self.tags]
-            self.POS = [t[self.col_pos].strip() for t in self.tags]
+            self.SUF = [t[self.col_suf] for t in self.tags]
+            self.POS = [t[self.col_pos] for t in self.tags]
             self.CHK = self.get_BIEStag(self.col_chk, self.tags)
             self.NER = self.get_BIEStag(self.col_ner, self.tags)
+            self.SRL = self.get_SRL()
         except Exception, e:
             logging.debug(pformat(tags))
             raise
@@ -83,8 +84,16 @@ class SentenceFeatures(object):
         return True if tag[1].split()[0].isdigit() else False
 
 
+    def get_SRL(self):
+        _t = [t[self.col_pre] for t in self.tags if not t[self.col_pre] == "-"]
+        srl = []
+        for i, w in enumerate(_t):
+            srl.append(self.get_BIEStag(self.col_pre+i+1, self.tags))
+        print srl
+        return srl
+
     def get_BIEStag(self, col=None, tag=None):
-        _col = [t[col].strip() for t in self.tags]
+        _col = [t[col] for t in self.tags]
         try:
             idx_B = [(i, t.split("-")[-1]) for i, t in enumerate(_col) if t.startswith("B")]
             idx_E = [(i, t.split("-")[-1]) for i, t in enumerate(_col) if t.startswith("E")]

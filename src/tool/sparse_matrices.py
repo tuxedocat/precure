@@ -7,6 +7,12 @@ Save and load scipy's sparse matrices
 (Made this because somehow scikit-learn seems has no proper solution 
                                 for save/loading its sparse matrices)
 '''
+__author__ = 'Yu SAWAI'
+__version__ = ""
+__copyright__ = ""
+__license__ = "GPL v3"
+__descripstion__ = ""
+__usage__ = ""
 
 import numpy as np
 import scipy as sp

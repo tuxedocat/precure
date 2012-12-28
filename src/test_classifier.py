@@ -43,5 +43,6 @@ def predsvm_test():
     xt = clsf.fmap.transform(features_t)
     yt = np.array(yt)
     for x in xt:
-        print clsf.predict_proba(x)
+        print clsf.predict_proba(x)[0]
+        clsf.show_readable_features(x)
     raise Exception

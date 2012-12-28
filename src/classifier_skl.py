@@ -3,23 +3,22 @@
 '''
 precure/src/classifer_skl.py
 '''
-__author__ = "Yu Sawai"
-__version__ = "0.1"
-__status__ = "Prototyping"
+__author__ = 'Yu SAWAI'
+__version__ = ""
+__copyright__ = ""
+__license__ = "GPL v3"
+__descripstion__ = ""
+__usage__ = ""
 
 import os
 import errno
 import sys
-import traceback
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
 import cPickle as pickle
-import collections
 from collections import defaultdict
 from pprint import pformat
 from time import time
-import glob
-from copy import deepcopy
 from random import shuffle
 try: 
     from sklearn.linear_model import SGDClassifier, Perceptron
@@ -28,13 +27,13 @@ try:
     from sklearn import preprocessing
     import numpy as np
     import scipy as sp
+    from feature_extractor import SentenceFeatures
 except:
+    print "Prerequisite: Please install 'sklearn', 'numpy', 'scipy'"
     raise ImportError
-from feature_extractor import SentenceFeatures
 
 
 chunk_gen = lambda x,y: (x[i:i+y] for i in range(0,len(x),y))
-
 
 class CaseMaker(object):
     def __init__(self, path_neg=None, path_pos=None, out_path_model=None):
@@ -56,7 +55,7 @@ class CaseMaker(object):
             fe = SentenceFeatures(sent)
             _f = fe.getfeatures()
             if _f:
-                self.labels_neg.append(0)
+                self.labels_neg.append(0)  # 0 means negative (non-native like class)
                 self.features_neg.append(_f)
             else:
                 pass
@@ -64,7 +63,7 @@ class CaseMaker(object):
             fe = SentenceFeatures(sent)
             _f = fe.getfeatures()
             if _f:
-                self.labels_pos.append(1)
+                self.labels_pos.append(1)  # 1 means positive (native like class)
                 self.features_pos.append(_f)
             else:
                 pass
@@ -85,8 +84,7 @@ class SklearnClassifier(object):
 
 
     def trainSGD(self, X=None, Y=None):
-        sgd = SGDClassifier(loss=self.loss, penalty=self.reg, alpha=self.alpha, n_iter=self.epochs,
-                            shuffle=True, n_jobs=self.multicpu)
+        sgd = SGDClassifier(**self.opts)
         self.model = sgd.fit(X, Y)
 
     def trainSVM(self, X=None, Y=None):
@@ -147,6 +145,13 @@ class SklearnClassifier(object):
         except:
             raise
 
+
+    def show_readable_features(self, X=None):
+        try:
+            strf = self.fmap.inverse_transform(X)
+            print pformat(strf)
+        except:
+            raise
 
 
 def mkmodel(path_neg=None, path_pos=None, path_model=None):
