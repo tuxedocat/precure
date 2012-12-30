@@ -62,7 +62,7 @@
 			console.log("changed!\nold: [" + myBuffer + "] new: [" + txt + "]");
 			myBuffer = txt; //update buffer
 			var spans = split_text(txt);
-			var new_txt = txt; //copy
+			var new_decorated_txt = txt; //copy
 			for (var i=spans.length-1; i>=0 ; --i){ //for each sentence
 				var beg = spans[i][0];
 				var end = spans[i][1];
@@ -86,18 +86,21 @@
 				};
 
 				//replace
-				new_txt = new_txt.substr(0, beg) 
+				new_decorated_txt = new_decorated_txt.substr(0, beg) 
 					+ new_str
-					+ new_txt.substr(end)
+					+ new_decorated_txt.substr(end)
 			};
 
-			if (new_txt != txt){
+			console.log(">>>" + new_decorated_txt + " @@@" + txt);
+			var current_decorated_text = ed.getContent();
+			if (new_decorated_txt != current_decorated_text){
+				console.log("replace!");
 				var sel = ed.selection.getSel();
 				var range = ed.selection.getRng();
 
 				var basenode = sel.baseNode;
 				var position = 0;
-				function getDom1(node){ //node, last_length){
+				function getDom1(node){
 					if(node.data){
 						if (node == basenode){
 							position += sel.baseOffset;
@@ -123,7 +126,7 @@
 				console.log(position);
 				
 
-				ed.setContent(new_txt);
+				ed.setContent(new_decorated_txt);
 					
 				var iframeElement = $("#elm1_ifr")[0];
 				var contentDoc = iframeElement.contentDocument;
@@ -132,7 +135,7 @@
 				var last_length = position;
 				var mynode = firstnode;
 
-				function getDom(node){ //node, last_length){
+				function getDom(node){
 					if(node.data){
 						if (last_length <= node.data.length){
 							mynode = node;
