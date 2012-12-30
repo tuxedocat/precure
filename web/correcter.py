@@ -66,6 +66,7 @@ class Server(BaseHTTPServer.HTTPServer):
         from nltk.tokenize import WhitespaceTokenizer
         for (beg, end) in WhitespaceTokenizer().span_tokenize(text):
             word = text[beg:end]
+            word = word.encode("utf8") #XXX
             if word.isalpha():
                 if self.speller.check(word):
                     pass
@@ -73,7 +74,7 @@ class Server(BaseHTTPServer.HTTPServer):
                     description = """Spell error:<br />
                         Candidates : %s""" % self.speller.suggest(word)
 #                    description = """<strong hptip="%s">%s</span>""" % (description, word) #XXX
-                    description = """<strong>%s</span>""" % (word) #XXX
+                    description = """<strong>%s</strong>""" % (word) #XXX
                     out.append({"begin":beg, "end": end, "type":"spell", "description" : description})
             else:
                 pass
