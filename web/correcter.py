@@ -74,7 +74,7 @@ class Server(BaseHTTPServer.HTTPServer):
                     description = """Spell error:<br />
                         Candidates : %s""" % self.speller.suggest(word)
 #                    description = """<strong hptip="%s">%s</span>""" % (description, word) #XXX
-                    description = """<strong>%s</strong>""" % (word) #XXX
+                    description = """<u>%s</u>""" % (word) #XXX
                     out.append({"begin":beg, "end": end, "type":"spell", "description" : description})
             else:
                 pass
