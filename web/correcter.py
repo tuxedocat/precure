@@ -71,11 +71,8 @@ class Server(BaseHTTPServer.HTTPServer):
                 if self.speller.check(word):
                     pass
                 else:
-                    description = """Spell error:<br />
-                        Candidates : %s""" % self.speller.suggest(word)
-#                    description = """<strong hptip="%s">%s</span>""" % (description, word) #XXX
-                    description = """<u>%s</u>""" % (word) #XXX
-                    out.append({"begin":beg, "end": end, "type":"spell", "description" : description})
+                    candidates = self.speller.suggest(word)
+                    out.append({"begin":beg, "end": end, "type":"spell", "candidates" : candidates})
             else:
                 pass
         return {u"errors" : out}
