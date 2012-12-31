@@ -1,7 +1,7 @@
 
 	if (document.location.protocol == 'file:') {
 		alert("The examples might not work properly on the local file system due to security settings in your browser. Please use a real webserver.");
-	}
+	};
 
 	function myOnSetupContent(editor_id, body, doc) {
 		var el = document.getElementById(editor_id+"_path_row");
@@ -209,7 +209,7 @@
 						var err = spell_errors[j];
 //                                                console.log(err);
 						new_str = new_str.substr(0, err.begin) 
-							  + "<u>"
+							  + "<u title=\"" + err.candidates + "\">"
 							  + new_str.substr(err.begin, err.end - err.begin) 
 							  + "</u>"
 							  + new_str.substr(err.end);

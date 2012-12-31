@@ -65,6 +65,7 @@
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
               <li><a href="#precure">Try!</a></li>
+              <li><a href="#description">Description</a></li>
               <li><a href="#about">About</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
@@ -103,6 +104,20 @@
 <!--        </div>-->
 <!--      </div>-->
 
+	<!-- -->
+	<div id="warning" style="visibility : hidden; font-size:100%; color:red;">
+	</div>
+	<script type="text/javascript">
+		var userAgent = window.navigator.userAgent.toLowerCase();
+		var announce = "現在，Google Chromeのみに対応しております<br /><br />" 
+				+ "あなたのブラウザは " + userAgent + " です";
+		if (! (userAgent.indexOf("chrome") > -1)) {
+			$("#warning").css('visibility', 'visible')
+				.html(announce);
+		}
+	</script>
+	<!-- ------------------------ -->
+
 
       <div class="page-header">
         <a><h1 id="precure">Let's try!! <small>あなたの英語はネイティブっぽいでしょうか?</small></h1></a>
@@ -118,6 +133,27 @@
 		<a href="javascript:;" onclick="alert(tinyMCE.get('elm1').getContent({format:'text'}));return false;">[Get plain contents]</a>
 
         </div>
+
+      <div class="page-header" id="description">
+        <h1>Description <small>説明</small></h1>
+      </div>
+        <div class="hero-unit">
+        	<h2>機能</h2>
+		<ul>
+			<li>スペルチェック (誤りのある単語に下線，ホバーすると訂正候補を表示)</li>
+		</ul>
+
+
+        	<h2>既知の不具合</h2>
+		<ul>
+			<li>Google chromeでしか動きません</li>
+			<li>Google chromeでは&lt;&gt;が消えてしまう</li>
+			<li>firefoxでは，&lt;br /&gt;が取得できない</li>
+			<li>IEでは，カーソル制御ができない</li>
+
+		</ul>
+        </div>
+
 
       <div class="page-header" id="about">
         <h1>About <small>本アプリケーションについて</small></h1>
