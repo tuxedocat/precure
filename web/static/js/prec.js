@@ -94,16 +94,32 @@
 			new_decorated_txt = new_decorated_txt.replace(/\n/g, "<br />");
 			var current_decorated_text = ed.getContent();
 			new_decorated_txt = "<p>" + new_decorated_txt + "</p>";
+
+//                        console.log("===");
+//                        console.log("old " + current_decorated_text);
+//                        console.log("new " + new_decorated_txt);
+
 			if (new_decorated_txt != current_decorated_text){
 				var sel = ed.selection.getSel();
 				var range = ed.selection.getRng();
 
 				var basenode = sel.baseNode;
+				var baseOffset = sel.baseOffset;
+				if (baseOffset !=0 && basenode.childNodes.length > baseOffset){
+					basenode = basenode.childNodes[baseOffset];
+					baseOffset = 0;
+				};
 				var position = 0;
 				function getDom1(node){
-					if(node.data){
+					if (node.nodeName == "BR"){
 						if (node == basenode){
-							position += sel.baseOffset;
+							return true;
+						};
+						position += 1;
+					}
+					else if(node.data){
+						if (node == basenode){
+							position += baseOffset;
 							return true;
 						}
 						else{
@@ -123,9 +139,8 @@
 				var contentDoc = iframeElement.contentDocument;
 				var firstnode = contentDoc.body.firstChild;
 				getDom1(firstnode);
-				
 
-				ed.setContent(new_decorated_txt);
+				ed.setContent(new_decorated_txt); //REPLACE !
 					
 				var iframeElement = $("#elm1_ifr")[0];
 				var contentDoc = iframeElement.contentDocument;
@@ -135,7 +150,14 @@
 				var mynode = firstnode;
 
 				function getDom(node){
-					if(node.data){
+					if (node.nodeName == "BR"){
+						if (last_length == 0){
+							mynode = node;
+							return true;
+						};
+						last_length -= 1;
+					}
+					else if (node.data){
 						if (last_length <= node.data.length){
 							mynode = node;
 							return true;
