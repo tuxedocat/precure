@@ -64,8 +64,9 @@
 		var sel = ed.selection.getSel();
 		var range = ed.selection.getRng();
 
-		var basenode = sel.baseNode;
-		var baseOffset = sel.baseOffset;
+		var basenode = sel.anchorNode;
+		var baseOffset = sel.anchorOffset ;
+
 		if (baseOffset !=0 && basenode.hasChildNodes() && basenode.childNodes.length > baseOffset){
 			basenode = basenode.childNodes[baseOffset];
 			baseOffset = 0;
