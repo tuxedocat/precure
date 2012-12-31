@@ -57,6 +57,96 @@
 		return SPANS;
 	};
 
+
+
+
+	function setContent(ed, new_decorated_txt){
+		var sel = ed.selection.getSel();
+		var range = ed.selection.getRng();
+
+		var basenode = sel.baseNode;
+		var baseOffset = sel.baseOffset;
+		if (baseOffset !=0 && basenode.hasChildNodes() && basenode.childNodes.length > baseOffset){
+			basenode = basenode.childNodes[baseOffset];
+			baseOffset = 0;
+		};
+		var position = 0;
+		function getDom1(node){
+			if (node.nodeName == "BR"){
+				if (node == basenode){
+					return true;
+				};
+				position += 1;
+			}
+			else if(node.data){
+				if (node == basenode){
+					position += baseOffset;
+					return true;
+				}
+				else{
+					position += node.data.length;
+				};
+			};
+			node = node.firstChild;
+			while(node){
+				var f = getDom1(node);
+				if (f)
+					return true;
+				node = node.nextSibling;
+			};
+			return false;
+		};
+		var iframeElement = $("#elm1_ifr")[0];
+		var contentDoc = iframeElement.contentDocument;
+		var firstnode = contentDoc.body.firstChild;
+		getDom1(firstnode);
+
+		ed.setContent(new_decorated_txt); //REPLACE !
+			
+		var iframeElement = $("#elm1_ifr")[0];
+		var contentDoc = iframeElement.contentDocument;
+		var range = contentDoc.createRange();
+		var firstnode = contentDoc.body.firstChild;
+		var last_length = position;
+		var mynode = firstnode;
+
+		function getDom(node){
+			if (node.nodeName == "BR"){
+				if (last_length == 0){
+					mynode = node;
+					return true;
+				};
+				last_length -= 1;
+			}
+			else if (node.data){
+				if (last_length <= node.data.length){
+					mynode = node;
+					return true;
+				}
+				else{
+					last_length -= node.data.length;
+				};
+			};
+			node = node.firstChild;
+			while(node){
+				var f = getDom(node);
+				if (f)
+					return true;
+				node = node.nextSibling;
+			};
+			return false;
+		};
+		
+		getDom(firstnode);
+		range.setStart(mynode, last_length);
+		range.setEnd(mynode, last_length);
+
+		var selection = iframeElement.contentWindow.getSelection();
+		selection.removeAllRanges();
+		selection.addRange(range);
+	}
+
+
 	function myHandleEvent(e) {
 
 		var ed = tinyMCE.get('elm1');
@@ -111,91 +201,7 @@
 //                        console.log("new " + new_decorated_txt);
 
 			if (new_decorated_txt != current_decorated_text){
-				var sel = ed.selection.getSel();
-				var range = ed.selection.getRng();
-
-				var basenode = sel.baseNode;
-				var baseOffset = sel.baseOffset;
-				if (baseOffset !=0 && basenode.childNodes.length > baseOffset){
-					basenode = basenode.childNodes[baseOffset];
-					baseOffset = 0;
-				};
-				var position = 0;
-				function getDom1(node){
-					if (node.nodeName == "BR"){
-						if (node == basenode){
-							return true;
-						};
-						position += 1;
-					}
-					else if(node.data){
-						if (node == basenode){
-							position += baseOffset;
-							return true;
-						}
-						else{
-							position += node.data.length;
-						};
-					};
-					node = node.firstChild;
-					while(node){
-						var f = getDom1(node);
-						if (f)
-							return true;
-						node = node.nextSibling;
-					};
-					return false;
-				};
-				var iframeElement = $("#elm1_ifr")[0];
-				var contentDoc = iframeElement.contentDocument;
-				var firstnode = contentDoc.body.firstChild;
-				getDom1(firstnode);
-
-				ed.setContent(new_decorated_txt); //REPLACE !
-					
-				var iframeElement = $("#elm1_ifr")[0];
-				var contentDoc = iframeElement.contentDocument;
-				var range = contentDoc.createRange();
-				var firstnode = contentDoc.body.firstChild;
-				var last_length = position;
-				var mynode = firstnode;
-
-				function getDom(node){
-					if (node.nodeName == "BR"){
-						if (last_length == 0){
-							mynode = node;
-							return true;
-						};
-						last_length -= 1;
-					}
-					else if (node.data){
-						if (last_length <= node.data.length){
-							mynode = node;
-							return true;
-						}
-						else{
-							last_length -= node.data.length;
-						};
-					};
-					node = node.firstChild;
-					while(node){
-						var f = getDom(node);
-						if (f)
-							return true;
-						node = node.nextSibling;
-					};
-					return false;
-				};
-				
-				getDom(firstnode);
-				range.setStart(mynode, last_length);
-				range.setEnd(mynode, last_length);
-
-				var selection = iframeElement.contentWindow.getSelection();
-				selection.removeAllRanges();
-				selection.addRange(range);
-
-//                                return false;
+				setContent(ed, new_decorated_txt);
 			};
 		};
 
