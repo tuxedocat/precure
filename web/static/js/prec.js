@@ -16,10 +16,10 @@
 			url: '/spell',
 			type: 'GET',
 			data: {
-				sent : _text,
+				sent : _text
 			},
 			dataType: 'json',
-			async : false,
+			async : false
 		})
 		.success(function( data ) {
 			SPELL_ERRORS = data.errors;
@@ -34,14 +34,18 @@
 
 	var SPANS = {spans : []}
 	function split_text(_text) {
+		if (_text == undefined || _text.length < 0){
+			return undefined;
+		};
+
 		$.ajax({
 			url: '/split',
 			type: 'GET',
 			data: {
-				text : _text,
+				text : _text
 			},
 			dataType: 'json',
-			async : false,
+			async : false
 		})
 		.success(function( data ) {
 			SPANS = data.spans;
@@ -62,6 +66,9 @@
 		if (myBuffer != txt){ //text is changed
 			myBuffer = txt; //update buffer
 			var spans = split_text(txt);
+			if (spans == undefined){
+				return true;
+			};
 			var new_decorated_txt = txt; //copy
 			for (var i=spans.length-1; i>=0 ; --i){ //for each sentence
 				var beg = spans[i][0];
@@ -79,8 +86,7 @@
 					var spell_errors = spell_check(str);
 					for (var j=spell_errors.length-1; j>=0; --j){
 						var err = spell_errors[j];
-						console.log(err);
-//                                                        + err.description
+//                                                console.log(err);
 						new_str = new_str.substr(0, err.begin) 
 							  + "<u>"
 							  + new_str.substr(err.begin, err.end - err.begin) 
