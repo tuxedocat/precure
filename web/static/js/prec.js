@@ -60,7 +60,7 @@
 
 
 
-	function setContent(ed, new_decorated_txt){
+	function setContentForNonIE(ed, new_decorated_txt){
 		var sel = ed.selection.getSel();
 		var range = ed.selection.getRng();
 
@@ -144,14 +144,44 @@
 		var selection = iframeElement.contentWindow.getSelection();
 		selection.removeAllRanges();
 		selection.addRange(range);
-	}
+	};
 
+	function setContentForIE(ed, new_decorated_txt){
+//                var iframeElement = $("#elm1_ifr")[0];
+//                var selection = iframeElement.document.selection;
+//                var range = selection.createRange();
+//                var sm1 = range.startContainer;
+//                var sm2 = range.startOffset;
+		var bm = ed.selection.getBookmark(2);
+
+		new_decorated_txt = new_decorated_txt.replace(/ /g, "&nbsp;");
+		new_decorated_txt = new_decorated_txt.replace(/\r\n/g, "<br />");
+		ed.setContent(new_decorated_txt); //REPLACE !
+
+//                range.move("character", 1);
+//                ed.selection.moveToBookmark(bm);
+	};
+
+	function setContent(ed, new_decorated_txt){
+		if (document.selection) { // IE
+			console.log("[" + new_decorated_txt + "]");
+			setContentForIE(ed, new_decorated_txt);
+		}
+		else{
+			new_decorated_txt = new_decorated_txt.replace(/\r\n/g, "<br />");
+			new_decorated_txt = new_decorated_txt.replace(/(\r|\n)/g, "<br />");
+			new_decorated_txt = "<p>" + new_decorated_txt + "</p>";
+			var current_decorated_text = ed.getContent();
+			if (new_decorated_txt != current_decorated_text){
+				setContentForNonIE(ed, new_decorated_txt);
+			};
+		};
+	};
 
 	function myHandleEvent(e) {
 
 		var ed = tinyMCE.get('elm1');
 		var txt = ed.getContent({format:'text'});
-			var current_decorated_text = ed.getContent();
 
 		if (myBuffer != txt){ //text is changed
 			myBuffer = txt; //update buffer
@@ -191,18 +221,7 @@
 					+ new_str
 					+ new_decorated_txt.substr(end)
 			};
-
-			new_decorated_txt = new_decorated_txt.replace(/\n/g, "<br />");
-			var current_decorated_text = ed.getContent();
-			new_decorated_txt = "<p>" + new_decorated_txt + "</p>";
-
-//                        console.log("===");
-//                        console.log("old " + current_decorated_text);
-//                        console.log("new " + new_decorated_txt);
-
-			if (new_decorated_txt != current_decorated_text){
-				setContent(ed, new_decorated_txt);
-			};
+			setContent(ed, new_decorated_txt);
 		};
 
 		return true; // Continue handling
