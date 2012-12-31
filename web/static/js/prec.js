@@ -57,9 +57,9 @@
 
 		var ed = tinyMCE.get('elm1');
 		var txt = ed.getContent({format:'text'});
+			var current_decorated_text = ed.getContent();
 
 		if (myBuffer != txt){ //text is changed
-			console.log("changed!\nold: [" + myBuffer + "] new: [" + txt + "]");
 			myBuffer = txt; //update buffer
 			var spans = split_text(txt);
 			var new_decorated_txt = txt; //copy
@@ -91,10 +91,10 @@
 					+ new_decorated_txt.substr(end)
 			};
 
-			console.log(">>>" + new_decorated_txt + " @@@" + txt);
+			new_decorated_txt = new_decorated_txt.replace(/\n/g, "<br />");
 			var current_decorated_text = ed.getContent();
+			new_decorated_txt = "<p>" + new_decorated_txt + "</p>";
 			if (new_decorated_txt != current_decorated_text){
-				console.log("replace!");
 				var sel = ed.selection.getSel();
 				var range = ed.selection.getRng();
 
@@ -123,7 +123,6 @@
 				var contentDoc = iframeElement.contentDocument;
 				var firstnode = contentDoc.body.firstChild;
 				getDom1(firstnode);
-				console.log(position);
 				
 
 				ed.setContent(new_decorated_txt);
