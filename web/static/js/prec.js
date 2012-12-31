@@ -74,13 +74,18 @@
 				}
 				else{
 					new_str = str; //copy
+
+					//SPELL CHECK!
 					var spell_errors = spell_check(str);
 					for (var j=spell_errors.length-1; j>=0; --j){
 						var err = spell_errors[j];
 						console.log(err);
+//                                                        + err.description
 						new_str = new_str.substr(0, err.begin) 
-							+ err.description
-							+ new_str.substr(err.end);
+							  + "<u>"
+							  + new_str.substr(err.begin, err.end - err.begin) 
+							  + "</u>"
+							  + new_str.substr(err.end);
 					};
 					myDecorationBank[str] = new_str;
 				};
