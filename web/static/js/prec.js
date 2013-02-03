@@ -32,6 +32,28 @@
 	};
 
 
+	var MY_PAS = [];
+	function get_pas(_text) {
+		$.ajax({
+			url: '/pas',
+			type: 'GET',
+			data: {
+				sent : _text
+			},
+			dataType: 'json',
+			async : false
+		})
+		.success(function( data ) {
+			MY_PAS = data;
+		})
+		.error(function( data ) {
+		})
+		.complete(function( data ) {
+		});
+		return MY_PAS;
+	};
+
+
 	var SPANS = {spans : []}
 	function split_text(_text) {
 		if (_text == undefined || _text.length < 0){
@@ -185,6 +207,7 @@
 		var txt = ed.getContent({format:'text'});
 
 		if (myBuffer != txt){ //text is changed
+			var new_pas_html = "";
 			myBuffer = txt; //update buffer
 			var spans = split_text(txt);
 			if (spans == undefined){
@@ -196,6 +219,7 @@
 				var end = spans[i][1];
 				var str = txt.substr(beg, end -  beg );
 
+				//=== DECORATION START ===//
 				var new_str = '';
 				if (str in myDecorationBank){
 					new_str = myDecorationBank[str];
@@ -221,8 +245,15 @@
 				new_decorated_txt = new_decorated_txt.substr(0, beg) 
 					+ new_str
 					+ new_decorated_txt.substr(end)
+				//=== DECORATION END ===//
+
+				//GET PAS!
+				var pas_text = get_pas(str);
+				var new_pas_html = "<li>" + str + "<br />" + pas_text + "</li><br />" + new_pas_html;
 			};
 			setContent(ed, new_decorated_txt);
+			new_pas_html = "<ul>" + new_pas_html + "</ul>";
+			$("#predicates_list").html(new_pas_html); //set FIXME
 		};
 
 		return true; // Continue handling

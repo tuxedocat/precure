@@ -52,6 +52,9 @@ class SennaWrap(object):
 
     def getPredicates(self, sentence):
         result = self.parseSentence(sentence)
+        if len(result) == 0:
+            return []
+
         DEFAULT_COLUM_NUM = 6
         PAS_START =4 
         pred_num = len(result[0]) - DEFAULT_COLUM_NUM
