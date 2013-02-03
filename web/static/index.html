@@ -48,6 +48,9 @@
 		});
 		</script>
 		<script type="text/javascript" src="./js/prec.js"></script>
+
+		<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+		<script type="text/javascript" src="./js/gauge.js"></script>
 </head>
 <body>
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
@@ -124,9 +127,17 @@
       </div>
         <div class="hero-unit">
 
-		<form id="editarea" method="post" onsubmit="return false;">
-		<textarea id="elm1" name="elm1" rows="15" cols="80" style="width: 100%" class="tinymce"></textarea>
+		<form id="editarea" method="post" onsubmit="return false;"  style="width:800px; float:left;">
+			<textarea id="elm1" name="elm1" rows="15" cols="80" style="width: 100%" class="tinymce"></textarea>
 		</form>
+		<div style="float: left; width:200px;">
+			<div id='fluency_chart'></div>
+			<div id='predicates_list'>
+			</div>
+		</div>
+
+		<div style="clear: both;">
+		</div>
 <!--                                This is some example text that you can edit inside the &lt;strong&gt;TinyMCE editor&lt;/strong&gt;.-->
 
 		<a href="javascript:;" onclick="alert(tinyMCE.get('elm1').getContent());return false;">[Get contents]</a>
