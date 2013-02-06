@@ -14,6 +14,7 @@ import os
 import aspell
 # Prerequisite: Install aspell-python from http://wm.ite.pl/proj/aspell-python/index-c.html
 
+import tools.senna
 
 class Server(BaseHTTPServer.HTTPServer):
 
@@ -27,7 +28,8 @@ class Server(BaseHTTPServer.HTTPServer):
 
         self.speller = aspell.Speller('lang', 'en')
 
-        self.funcs = {'split':self.split, 'spell':self.spell}
+        self.senna = tools.senna.SennaWrap(u"/data/tool/senna/")
+        self.funcs = {'split':self.split, 'spell':self.spell, 'pas': self.pas}
 
     def __common(self, query, callback, mymethod):
         res = responce.Response()
@@ -77,10 +79,31 @@ class Server(BaseHTTPServer.HTTPServer):
                 pass
         return {u"errors" : out}
 
+    def __pas(self, text):
+        assert isinstance(text, unicode)
+
+        out = []
+#        text = text.encode("utf8") #XXX
+        text = text.rstrip().lstrip()
+        if len(text) == 0:
+            return out
+
+        result = self.senna.getPredicates(text)
+#        [[1, 'love', {'S-V': 'love', 'S-A0': 'I'}], [3, 'kill', {'S-V': 'kill', 'S-A1': 'you.', 'S-A0': 'I'}]]
+        for item in result:
+            out.append(item[2])
+        return str(out) #FIXME
+
+
     def spell(self, server, *args, **qdict):
         query = qdict.get('sent', None)
         callback = qdict.get('callback', None)
         return self.__common(query, callback, self.__spell)
+
+    def pas(self, server, *args, **qdict):
+        query = qdict.get('sent', None)
+        callback = qdict.get('callback', None)
+        return self.__common(query, callback, self.__pas)
 
 
 
