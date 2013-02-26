@@ -50,9 +50,35 @@ class SennaWrap(object):
             result.append(line.split())
         return result
 
+    def getPredicates(self, sentence):
+        result = self.parseSentence(sentence)
+        if len(result) == 0:
+            return []
+
+        DEFAULT_COLUM_NUM = 6
+        PAS_START =4 
+        pred_num = len(result[0]) - DEFAULT_COLUM_NUM
+#        preds = [[] for i in xrange(0, pred_num)]
+        preds = []
+        _pred_count = 0
+
+        for pos, items in enumerate(result):
+            pred = items[PAS_START]
+            if pred != "-":
+                preds.append([pos, pred, {}])
+
+        for pos, items in enumerate(result):
+            for pred_id in xrange(0, pred_num):
+                my_column = items[PAS_START+1 + pred_id]
+                if my_column != 'O':
+                    pred  = preds[pred_id]
+                    pred[2][my_column] = items[0]
+#                    pred[2][my_column] = (pos, items[0])
+
+        return preds
 
 if __name__ == '__main__':
-    sennaPath = u'/home/yuta-h/tool/senna/'
+    sennaPath = u'/data/tool/senna/'
     senna = SennaWrap(sennaPath)
     import sys 
     while True:
@@ -61,6 +87,7 @@ if __name__ == '__main__':
         if len(string) == 0:
             sys.exit()
         out = senna.parseSentence(string)
+        out = senna.getPredicates(string)
         print ">" , out
 
 

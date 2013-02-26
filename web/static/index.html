@@ -1,0 +1,220 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>その英語はなんか変かも</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<meta name="viewport" content="width=device-width">
+
+	<link rel="stylesheet" href="less/style.css">
+	
+
+<!--        <script src="js/libs/modernizr-2.5.3-respond-1.1.0.min.js"></script>-->
+
+		<script type="text/javascript" src="./js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="./js/tinymce/jquery.tinymce.js"></script>
+
+		<script type="text/javascript">
+			$().ready(function() {
+			$('textarea.tinymce').tinymce({
+				script_url : './js/tinymce/tiny_mce.js',
+				mode : "textareas",
+				theme : "advanced",
+				forced_root_block : false,
+
+				height : "480",
+				content_css : "custom.css",
+				plugins : "print,searchreplace,paste,fullscreen",
+				theme_advanced_buttons1 : "selectall,pastetext,pasteword,"+
+				"separator,separator," +
+				"search,replace," +
+				"charmap,separator," +
+				"print," + 
+				(window.defaultResizableEditor ? ",separator,fullscreen" : ""),
+				theme_advanced_buttons2 : "",
+				theme_advanced_buttons3 : "",
+				theme_advanced_toolbar_location : "top",
+				theme_advanced_toolbar_align : "left",
+
+				handle_event_callback : "myHandleEvent"
+			});
+		});
+		</script>
+		<script type="text/javascript" src="./js/prec.js"></script>
+
+		<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+		<script type="text/javascript" src="./js/gauge.js"></script>
+</head>
+<body>
+<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">CICP2012-Precure</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#precure">Try!</a></li>
+              <li><a href="#description">Description</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit" style="background: url(./img/top1.jpg) no-repeat right;">
+        <h1>コーパスが、<br>その英語はなんか変かも...<br>って言ってたんだけど、どうする?</h1>
+        <p>Precureは学術論文の英語添削のためのアプリケーションです。</p>
+        <p>英文中のPredicates(述語)の用例をコーパスから得た統計的特徴量によって推薦します。</p>
+        <p>この日本語もちょっと変だよ!!!</p>
+        <p><a class="btn btn-primary btn-large" href="#precure">Try it now!! &raquo;</a></p>
+      </div>
+
+      <!-- Example row of columns -->
+<!--      <div class="row">-->
+<!--        <div class="span4">-->
+<!--          <h2>About</h2>-->
+<!--           <p>本プロジェクトの背景と目的など。</p>-->
+<!--          <p><a class="btn" href="#about">View details &raquo;</a></p>-->
+<!--        </div>-->
+<!--        <div class="span4">-->
+<!--          <h2>Under the hood</h2>-->
+<!--           <p>中身の説明。</p>-->
+<!--          <p><a class="btn" href="#underthehood">View details &raquo;</a></p>-->
+<!--       </div>-->
+<!--        <div class="span4">-->
+<!--          <h2>Acknowledgement</h2>-->
+<!--          <p>リソース・データについての謝辞。</p>-->
+<!--          <p><a class="btn" href="#acknowledgement">View details &raquo;</a></p>-->
+<!--        </div>-->
+<!--      </div>-->
+
+	<!-- -->
+	<div id="warning" style="visibility : hidden; font-size:100%; color:red;">
+	</div>
+	<script type="text/javascript">
+		var userAgent = window.navigator.userAgent.toLowerCase();
+		var announce = "現在，Google Chromeのみに対応しております<br /><br />" 
+				+ "あなたのブラウザは " + userAgent + " です";
+		if (! (userAgent.indexOf("chrome") > -1)) {
+			$("#warning").css('visibility', 'visible')
+				.html(announce);
+		}
+	</script>
+	<!-- ------------------------ -->
+
+
+      <div class="page-header">
+        <a><h1 id="precure">Let's try!! <small>あなたの英語はネイティブっぽいでしょうか?</small></h1></a>
+      </div>
+        <div class="hero-unit">
+
+		<form id="editarea" method="post" onsubmit="return false;"  style="width:800px; float:left;">
+			<textarea id="elm1" name="elm1" rows="15" cols="80" style="width: 100%" class="tinymce"></textarea>
+		</form>
+		<div style="float: left; width:200px;">
+			<div id='fluency_chart'></div>
+			<div id='predicates_list'>
+			</div>
+		</div>
+
+		<div style="clear: both;">
+		</div>
+<!--                                This is some example text that you can edit inside the &lt;strong&gt;TinyMCE editor&lt;/strong&gt;.-->
+
+		<a href="javascript:;" onclick="alert(tinyMCE.get('elm1').getContent());return false;">[Get contents]</a>
+		<a href="javascript:;" onclick="alert(tinyMCE.get('elm1').getContent({format:'text'}));return false;">[Get plain contents]</a>
+
+        </div>
+
+      <div class="page-header" id="description">
+        <h1>Description <small>説明</small></h1>
+      </div>
+        <div class="hero-unit">
+        	<h2>機能</h2>
+		<ul>
+			<li>スペルチェック (誤りのある単語に下線，ホバーすると訂正候補を表示)</li>
+		</ul>
+
+
+        	<h2>既知の不具合</h2>
+		<ul>
+			<li>Google chromeでしか動きません</li>
+			<li>Google chromeでは&lt;&gt;が消えてしまう</li>
+			<li>firefoxでは，&lt;br /&gt;が取得できない</li>
+			<li>IEでは，カーソル制御ができない</li>
+
+			<li>アルファベット以外を入力するとエラーになる</li>
+		</ul>
+        </div>
+
+
+      <div class="page-header" id="about">
+        <h1>About <small>本アプリケーションについて</small></h1>
+      </div>
+        <div class="hero-unit">
+		<p>
+			本アプリケーションは，
+			NAIST Creative and International Competitiveness Project
+			「コーパスが、君の論文の英語は変だって言っていたよ。」
+			(2012年6月～2013年3月)
+			の成果です
+		</p>
+        </div>
+
+      <div class="page-header" id="contact">
+        <h1>Contact<small>連絡先</small></h1>
+      </div>
+        <div class="hero-unit">
+		<p>
+			<a href="http://www.naist.jp/">奈良先端科学技術大学院大学</a>
+			<a href="http://isw3.naist.jp/">情報科学研究科</a>
+			<a href="http://cl.naist.jp/">自然言語処理学講座</a>
+
+			<ul>
+				<li>澤井 悠 (Yu Sawai)</li>
+				<li>林部 祐太 (Yuta Hayashibe)</li>
+				<li>坂口 慶祐 (Keisuke Sakaguch)</li>
+			</ul>
+		</p>
+        </div>
+
+      <hr>
+
+<!--      <footer>-->
+<!--        <p>&copy; CICP2012 The Graduate School of Information Science, NAIST</p>-->
+<!--      </footer>-->
+
+    </div> <!-- /container -->
+
+
+<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
+<!--<script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.2.min.js"><\/script>')</script>-->
+
+<script src="js/libs/bootstrap/bootstrap.min.js"></script>
+
+<script src="js/script.js"></script>
+
+</body>
+</html>
+
+
+
