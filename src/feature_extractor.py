@@ -1,10 +1,10 @@
-#! /usr/bin/env python
-# coding: utf-8
+#!/usr/bin/env python
+#coding:utf-8
 from __future__ import division
 '''
 precure/src/feature_extractor.py
 '''
-__author__ = 'Yu SAWAI'
+__author__ = "Yu SAWAI"
 __version__ = ""
 __copyright__ = ""
 __license__ = "GPL v3"
@@ -23,15 +23,70 @@ from numpy import array
 import cPickle as pickle
 import traceback
 import math
-from nltk import ngrams as ng
+from nltk import ngrams
+from tools import senna
+
+path = unicode(os.environ["SENNAPATH"])
+sp = senna.SennaWrap(path)
+
+
+class DocumentFeatures(object):
+    """
+    Document level features
+    (takes document as a list of lists)
+    """
+    def __init__(self, doc=[], parse=True):
+        if parse is True:
+            parsed = [sp.parseSentence(" ".join(s)) for s in doc]
+            self.doc = parsed
+        else:
+            self.doc = doc
+        self.features = defaultdict(float)
+
+    def pipeline(self):
+        self.preprocess()
+        self.doc_bow()
+        self.avg_length()
+        self.doc_ngram()
+        return self.features
+
+    def preprocess(self):
+        self.sentfeatures = [getsf(s) for s in self.doc]
+        self.docfeatures = reduce(lambda x,y: x+y, [d.items() for d in self.sentfeatures])
+
+    def doc_bow(self):
+        # Get tuples from sentence-wise BOW, and then flatten them as a list
+        docbow = {id:v for (id, v) in self.docfeatures if id.startswith("BOW")}
+        self.features.update(docbow)
+
+    def avg_length(self):
+        """
+        Average length of sentences in a doc.
+        """
+        avglen = sum([len(l) for l in self.doc])/float(len(self.doc))
+        if avglen < 5:
+            self.features.update({"AVGLEN<5":1})
+        for _t in range(5, 100, 5):
+            if avglen >= _t:
+                self.features.update({"AVGLEN>%d"%_t:1})
+
+    def doc_ngram(self):
+        docngram = {id:v for (id, v) in self.docfeatures if id.startswith("Ngram")}
+        self.features.update(docngram)
+
+
+def getsf(tags=[]):
+    sf = SentenceFeatures(tags)
+    f = sf.getfeatures()
+    return f
 
 
 class SentenceFeatures(object):
     """
     Extractor for a sentence given as a list of lines
+    (each line is assumed to be formatted as tab-separated 
+        style, and must be parsed by SENNA parser)
     """
-    nullfeature = {"NULL":1}
-
     def __init__(self, tags=[]):
         self.features = defaultdict(float)
         self.col_suf = 0
@@ -70,26 +125,23 @@ class SentenceFeatures(object):
             logging.debug(pformat(tags))
             raise
 
-
     def getfeatures(self):
         self.bow()
-        self.length()
+        self.ngrams()
         return self.features
 
     def gen_fn(self, l=None):
         return "_".join(l)
 
-
     def is_withoffset(self, tag=None):
         return True if tag[1].split()[0].isdigit() else False
-
 
     def get_SRL(self):
         _t = [t[self.col_pre] for t in self.tags if not t[self.col_pre] == "-"]
         srl = []
         for i, w in enumerate(_t):
             srl.append(self.get_BIEStag(self.col_pre+i+1, self.tags))
-        print srl
+        # print srl
         return srl
 
     def get_BIEStag(self, col=None, tag=None):
@@ -107,20 +159,32 @@ class SentenceFeatures(object):
     def length(self):
         s_len_f = defaultdict(float)
         try:
-            s_len = math.log10(len(self.tags))
+            s_len = len(self.tags)
         except ValueError:
             s_len = 0
-        if s_len < 1.0:
-            s_len_f.update({"LEN_LOG<1.0":1})
-        for _t in (x * 0.1 for x in range(10, 21)):
+        if s_len < 5:
+            s_len_f.update({"LEN<5":1})
+        for _t in range(5, 100, 5):
             if s_len >= _t:
-                s_len_f.update({"LEN_LOG>%1.1f"%_t:1})
-        # print pformat(self.tags)
+                s_len_f.update({"LEN>%d"%_t:1})
         self.features.update(s_len_f)
-
 
     def bow(self):
         bowf = {"BOW_%s"%w.lower() :1 for w in self.SUF}
+        bowposf = {"BOWPOS_%s/%s"%(w[0].lower(), w[1].lower()) :1 for w 
+                                              in zip(self.SUF, self.POS)}
         self.features.update(bowf)
+        self.features.update(bowposf)
+
+    def ngrams(self, ns=[2,3]):
+        for n in ns:
+            ngf = {"Ngram(N={})_{}".format(n, "_".join(t)) : 1
+                    for t in ngrams(self.SUF, n)}
+            ngfp = {"Ngram(N={})_{}".format(n, "_".join(t)) : 1
+                    for t in ngrams(self.POS, n)}
+        self.features.update(ngf)
+        self.features.update(ngfp)
 
 
+if __name__=='__main__':
+    pass

@@ -1,8 +1,13 @@
-# ! /usr/bin/env python
-# coding: utf-8
+#!/usr/bin/env python
+#coding:utf-8
+__author__ = "Yu SAWAI"
+__version__ = ""
+__copyright__ = ""
+__license__ = "GPL v3"
+__descripstion__ = ""
+__usage__ = ""
 
 from nose.plugins.attrib import attr
-from feature_extractor import SentenceFeatures
 from datetime import datetime
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s',
@@ -12,12 +17,28 @@ from pprint import pformat
 from collections import defaultdict
 import cPickle as pickle
 from sklearn.feature_extraction import DictVectorizer
-
+import json
+from feature_extractor import SentenceFeatures, DocumentFeatures
 
 class TestFext(object):
     def setUp(self):
         self.testpath = "test/sennatags.txt"
         self.testpath_off = "test/sennatags_off.txt"
+        self.jsonpath = "../corpora/low.json"
+
+    @attr("json")
+    def test_json(self):
+        self.json = json.load(open(self.jsonpath, "r"))
+        fv = []
+        for d in self.json[0:5]:
+            fe = DocumentFeatures(d, parse=True)
+            fe.pipeline()
+            logging.debug(pformat(fe.features))
+            fv.append(fe.features)
+        # vec = DictVectorizer(sparse=True)
+        # array_f = vec.fit_transform(fv).toarray()
+        # logging.debug(pformat(array_f))
+        raise Exception
 
     @attr("without_offset")
     def test_wo_offset(self):
