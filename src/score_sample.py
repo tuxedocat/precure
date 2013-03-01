@@ -40,4 +40,4 @@ def get_score(doc=[], modelpath=None):
 if __name__ == '__main__':
     test = [ ["The", "cat", "sat", "on", "the", "mat", "."],
            ["Colorless", "green", "ideas", "sleep", "furiously", "."] ]
-    print get_score(test, "test/models/model/")
+    print get_score(test, "../model/")
