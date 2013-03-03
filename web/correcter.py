@@ -14,7 +14,7 @@ import os
 import aspell
 # Prerequisite: Install aspell-python from http://wm.ite.pl/proj/aspell-python/index-c.html
 
-import tools.senna
+import src.tools.senna
 
 class Server(BaseHTTPServer.HTTPServer):
 
@@ -28,7 +28,7 @@ class Server(BaseHTTPServer.HTTPServer):
 
         self.speller = aspell.Speller('lang', 'en')
 
-        self.senna = tools.senna.SennaWrap(u"/data/tool/senna/")
+        self.senna = src.tools.senna.SennaWrap(u"/data/tool/senna/")
         self.funcs = {'split':self.split, 'spell':self.spell, 'pas': self.pas}
 
     def __common(self, query, callback, mymethod):
