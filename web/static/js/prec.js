@@ -80,6 +80,32 @@
 	};
 
 
+	var myScore = 0;
+	function getScore(_texts) {
+		if (_texts == undefined || _texts.length < 0){
+			return undefined;
+		};
+
+		$.ajax({
+			url: '/score',
+			type: 'GET',
+			data: {
+				sents : _texts.join("///")
+			},
+			dataType: 'json',
+			async : false
+		})
+		.success(function( data ) {
+			myScore = data.score;
+		})
+		.error(function( data ) {
+		})
+		.complete(function( data ) {
+		});
+		return myScore;
+	};
+
+
 
 
 	function setContentForNonIE(ed, new_decorated_txt){
@@ -213,11 +239,13 @@
 			if (spans == undefined){
 				return true;
 			};
+			mySentences = new Array();
 			var new_decorated_txt = txt; //copy
 			for (var i=spans.length-1; i>=0 ; --i){ //for each sentence
 				var beg = spans[i][0];
 				var end = spans[i][1];
 				var str = txt.substr(beg, end -  beg );
+				mySentences.push(str);
 
 				//=== DECORATION START ===//
 				var new_str = '';
@@ -254,6 +282,10 @@
 			setContent(ed, new_decorated_txt);
 			new_pas_html = "<ul>" + new_pas_html + "</ul>";
 			$("#predicates_list").html(new_pas_html); //set FIXME
+
+			//getScore
+			var myScore = getScore(mySentences);
+			drawChart(myScore);
 		};
 
 		return true; // Continue handling

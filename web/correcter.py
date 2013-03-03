@@ -15,6 +15,7 @@ import aspell
 # Prerequisite: Install aspell-python from http://wm.ite.pl/proj/aspell-python/index-c.html
 
 import src.tools.senna
+import random
 
 class Server(BaseHTTPServer.HTTPServer):
 
@@ -29,7 +30,7 @@ class Server(BaseHTTPServer.HTTPServer):
         self.speller = aspell.Speller('lang', 'en')
 
         self.senna = src.tools.senna.SennaWrap(u"/data/tool/senna/")
-        self.funcs = {'split':self.split, 'spell':self.spell, 'pas': self.pas}
+        self.funcs = {'split':self.split, 'spell':self.spell, 'pas': self.pas, "score" : self.score}
 
     def __common(self, query, callback, mymethod):
         res = responce.Response()
@@ -59,6 +60,15 @@ class Server(BaseHTTPServer.HTTPServer):
         callback = qdict.get('callback', None)
         return self.__common(query, callback, self.__split)
 
+    def __score(self, texts):
+        texts = texts.split("///")
+        from nltk.tokenize import word_tokenize
+        tokens = []
+        for s in texts:
+            tk = word_tokenize(s)
+            tokens.append(tk)
+
+        return {"score" : round(random.random() * 100, 1)} #FIXME
 
 
     def __spell(self, text):
@@ -104,6 +114,13 @@ class Server(BaseHTTPServer.HTTPServer):
         query = qdict.get('sent', None)
         callback = qdict.get('callback', None)
         return self.__common(query, callback, self.__pas)
+
+
+    def score(self, server, *args, **qdict):
+        query = qdict.get('sents', None)
+        callback = qdict.get('callback', None)
+        return self.__common(query, callback, self.__score)
+
 
 
 
