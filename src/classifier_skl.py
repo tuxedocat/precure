@@ -45,8 +45,8 @@ def train_model(path_dat=None, path_model=None):
     """
     svropts = {"C":1000, "kernel":"poly", "degree":2, "gamma":0.0, 
                "coef0":0.0, "shrinking":True, 
-               "probability":True, "tol":0.001, "cache_size":200, 
-               "verbose":True, "max_iter":-1}
+               "probability":True, "tol":0.001, "cache_size":1024, 
+               "verbose":True }
 
     # Simply load files in dictionary order
     # (so files must have the same order of fluency level)
@@ -106,7 +106,7 @@ def process_each_cat(cat=None, docs=[]):
         fe.pipeline()
         _f.append(fe.features)
         b = assignment[cat]
-        # s = randrange(b-10, b+10)/100.0
+        s = randrange(b-10, b+10)/100.0
         _s.append(s)
     assert len(_f)==len(_s)
     return _f, _s

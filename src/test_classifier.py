@@ -38,7 +38,7 @@ def predsvm_test():
         clsf = SklearnClassifier()
         clsf.load_model(modelpath)
         clsf.load_fmap(modelpath)
-        xt = clsf.fmap.transform(_f)
-        print clsf.predict(xt)
+        xt = clsf.fmap.transform([_f])
+        print clsf.model.predict(xt)
         # clsf.show_readable_features(xt)
     raise Exception
