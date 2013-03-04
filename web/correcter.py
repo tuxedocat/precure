@@ -23,19 +23,14 @@ class Server(BaseHTTPServer.HTTPServer):
 
     def __init__(self, opts, *args, **qdict):
         BaseHTTPServer.HTTPServer.__init__(self, *args, **qdict)
-
         import nltk
-
         _SENTENCE_TOKENIZE_MODEL = "tokenizers/punkt/english.pickle"
         self.tokenizer = nltk.data.load(_SENTENCE_TOKENIZE_MODEL) 
-
         self.speller = aspell.Speller('lang', 'en')
-
         self.senna = src.tools.senna.SennaWrap(u"/data/tool/senna/")
         self.funcs = {'split':self.split, 'spell':self.spell, 'pas': self.pas, "score" : self.score}
         M_PATH = u"../model/"
         self.model = SklearnClassifier().load_model(M_PATH).load_fmap(M_PATH)
-
 
     def __common(self, query, callback, mymethod):
         res = responce.Response()
@@ -72,19 +67,15 @@ class Server(BaseHTTPServer.HTTPServer):
         for s in texts:
             tk = word_tokenize(s)
             tokens.append(tk)
-
         fe = DocumentFeatures(tokens, parse=True)
         _f = fe.pipeline()
         features = self.model.transform(_f)
         score = self.model.predict(features) 
-        
         # return {"score" : round(random.random() * 100, 1)} #FIXME
-        return {"score" : score} #FIXME
-
+        return {"score" : score * 100}
 
     def __spell(self, text):
         assert isinstance(text, unicode)
-
         out = []
         from nltk.tokenize import WhitespaceTokenizer
         for (beg, end) in WhitespaceTokenizer().span_tokenize(text):
@@ -125,7 +116,6 @@ class Server(BaseHTTPServer.HTTPServer):
         query = qdict.get('sent', None)
         callback = qdict.get('callback', None)
         return self.__common(query, callback, self.__pas)
-
 
     def score(self, server, *args, **qdict):
         query = qdict.get('sents', None)
