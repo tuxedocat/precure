@@ -13,9 +13,11 @@ import sys
 import os
 import aspell
 # Prerequisite: Install aspell-python from http://wm.ite.pl/proj/aspell-python/index-c.html
-
-import src.tools.senna
 import random
+import src.tools.senna
+from src.feature_extractor import DocumentFeatures, SentenceFeatures
+from src.classifier_skl import SklearnClassifier
+
 
 class Server(BaseHTTPServer.HTTPServer):
 
@@ -31,6 +33,9 @@ class Server(BaseHTTPServer.HTTPServer):
 
         self.senna = src.tools.senna.SennaWrap(u"/data/tool/senna/")
         self.funcs = {'split':self.split, 'spell':self.spell, 'pas': self.pas, "score" : self.score}
+        M_PATH = u"../model/"
+        self.model = SklearnClassifier().load_model(M_PATH).load_fmap(M_PATH)
+
 
     def __common(self, query, callback, mymethod):
         res = responce.Response()
@@ -68,7 +73,13 @@ class Server(BaseHTTPServer.HTTPServer):
             tk = word_tokenize(s)
             tokens.append(tk)
 
-        return {"score" : round(random.random() * 100, 1)} #FIXME
+        fe = DocumentFeatures(tokens, parse=True)
+        _f = fe.pipeline()
+        features = self.model.transform(_f)
+        score = self.model.predict(features) 
+        
+        # return {"score" : round(random.random() * 100, 1)} #FIXME
+        return {"score" : score} #FIXME
 
 
     def __spell(self, text):
