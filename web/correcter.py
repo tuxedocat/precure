@@ -76,7 +76,7 @@ class Server(BaseHTTPServer.HTTPServer):
         features = self.model.transform(_f)
         score = self.model.predict(features) 
         # return {"score" : round(random.random() * 100, 1)} #FIXME
-        return {"score" : score * 100}
+        return {"score" : int(score * 100)}
 
     def __spell(self, text):
         assert isinstance(text, unicode)
