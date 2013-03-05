@@ -196,6 +196,7 @@ class SklearnClassifier(object):
                 self.model = pickle.load(f)
         except:
             raise
+        return self
 
     def load_fmap(self, path_model=None):
         try:
@@ -203,6 +204,7 @@ class SklearnClassifier(object):
                 self.fmap = pickle.load(f)
         except:
             raise
+        return self
 
     def show_readable_features(self, X=None):
         """

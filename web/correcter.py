@@ -29,7 +29,7 @@ class Server(BaseHTTPServer.HTTPServer):
         self.speller = aspell.Speller('lang', 'en')
         self.senna = src.tools.senna.SennaWrap(u"/data/tool/senna/")
         self.funcs = {'split':self.split, 'spell':self.spell, 'pas': self.pas, "score" : self.score}
-        M_PATH = u"../model/"
+        M_PATH = u"./model/"
         self.model = SklearnClassifier().load_model(M_PATH).load_fmap(M_PATH)
 
     def __common(self, query, callback, mymethod):
