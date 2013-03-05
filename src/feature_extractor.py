@@ -23,6 +23,7 @@ from numpy import array
 import cPickle as pickle
 import traceback
 import math
+import nltk
 from nltk import ngrams
 from tools import senna
 

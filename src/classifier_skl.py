@@ -32,7 +32,7 @@ try:
     from feature_extractor import DocumentFeatures, SentenceFeatures
 except ImportError:
     print "Prerequisite: This requires 'sklearn', 'numpy', 'scipy'"
-    exit()
+    raise
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
 chunk_gen = lambda x,y: (x[i:i+y] for i in range(0,len(x),y))
