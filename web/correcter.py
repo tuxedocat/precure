@@ -27,7 +27,11 @@ class Server(BaseHTTPServer.HTTPServer):
         _SENTENCE_TOKENIZE_MODEL = "tokenizers/punkt/english.pickle"
         self.tokenizer = nltk.data.load(_SENTENCE_TOKENIZE_MODEL) 
         self.speller = aspell.Speller('lang', 'en')
-        self.senna = src.tools.senna.SennaWrap(u"/data/tool/senna/")
+        try:
+            sennabin = unicode(os.environ['SENNAPATH'])
+        except KeyError:
+            sennabin = u"/data/tool/senna/"
+        self.senna = src.tools.senna.SennaWrap(sennabin)
         self.funcs = {'split':self.split, 'spell':self.spell, 'pas': self.pas, "score" : self.score}
         M_PATH = u"./model/"
         self.model = SklearnClassifier().load_model(M_PATH).load_fmap(M_PATH)
