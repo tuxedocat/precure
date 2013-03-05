@@ -227,8 +227,7 @@
 		};
 	};
 
-	function myHandleEvent(e) {
-
+	function myrefresh() {
 		var ed = tinyMCE.get('elm1');
 		var txt = ed.getContent({format:'text'});
 
@@ -288,6 +287,12 @@
 			drawChart(myScore);
 		};
 
+		return true; // Continue handling
+	};
+
+	function myHandleEvent(e) {
+		//XXX
+//                myrefresh();
 		return true; // Continue handling
 	};
 
