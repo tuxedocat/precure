@@ -296,7 +296,7 @@
 				{
 				var msg = "Excellent, I couldn't find the slightest mistakes.";
 				}
-			$("#mrcorpus").popover({title: 'Mr. Corpus says...', content: "<h3>" + msg + "</h3>"});
+			$("#mrcorpus").popover({placement: 'top', title: 'Mr. Corpus says...', content: "<h3>" + msg + "</h3>"});
 			$("#mrcorpus").popover('destroy');
 		};
 		return true; // Continue handling[
