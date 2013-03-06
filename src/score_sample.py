@@ -35,7 +35,7 @@ def get_score(doc=[], modelpath=None):
     model.load_fmap(modelpath)
     f = model.transform(_f)
     score = model.predict(f) 
-    return score
+    return int(score*100)
 
 if __name__ == '__main__':
     test = [ ["The", "cat", "sat", "on", "the", "mat", "."],

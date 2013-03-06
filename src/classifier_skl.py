@@ -101,14 +101,18 @@ def process_each_cat(cat=None, docs=[]):
     assignment = [20, 70, 100]
     _f = []
     _s = []
+    _p = []
     for d in docs:
         fe = DocumentFeatures(d, parse=True)
         fe.pipeline()
         _f.append(fe.features)
+        _p.append(fe.doc)
         b = assignment[cat]
         s = randrange(b-10, b+10)/100.0
         _s.append(s)
     assert len(_f)==len(_s)
+    import json
+    json.dump(_p, open("../parsed/{}.json".format(cat), "w"))
     return _f, _s
 
 
