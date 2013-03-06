@@ -40,6 +40,20 @@ class TestFext(object):
         # logging.debug(pformat(array_f))
         raise Exception
 
+
+    @attr("json_parsed")
+    def test_json2(self):
+        self.jsonpath = "test/test.json"
+        self.json = json.load(open(self.jsonpath, "r"))
+        fv = []
+        for d in self.json:
+            fe = DocumentFeatures(d, parse=False)
+            fe.pipeline()
+            logging.debug(pformat(fe.features))
+            fv.append(fe.features)
+        raise Exception
+
+
     @attr("without_offset")
     def test_wo_offset(self):
         self.testdata = [doc.split("\n") for doc in open(self.testpath).read().split("\n\n") if doc]

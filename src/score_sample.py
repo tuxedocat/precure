@@ -40,4 +40,7 @@ def get_score(doc=[], modelpath=None):
 if __name__ == '__main__':
     test = [ ["The", "cat", "sat", "on", "the", "mat", "."],
            ["Colorless", "green", "ideas", "sleep", "furiously", "."] ]
-    print get_score(test, "../model/")
+    print get_score(test, "../model_LR/")
+    test = [ ["Theee", "caaat", "saaaat", "on", "theee", "mat", "."],
+           ["Colorless", "green", "ideas", "sleep", "foouuriously", "."] ]
+    print get_score(test, "../model_LR/")

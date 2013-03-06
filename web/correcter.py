@@ -33,7 +33,7 @@ class Server(BaseHTTPServer.HTTPServer):
             sennabin = u"/data/tool/senna/"
         self.senna = src.tools.senna.SennaWrap(sennabin)
         self.funcs = {'split':self.split, 'spell':self.spell, 'pas': self.pas, "score" : self.score}
-        M_PATH = u"./model/"
+        M_PATH = opts.model_dir
         self.model = SklearnClassifier()
         self.model.load_model(M_PATH)
         self.model.load_fmap(M_PATH)
