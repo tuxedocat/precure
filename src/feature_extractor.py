@@ -26,9 +26,11 @@ import math
 import nltk
 from nltk import ngrams
 from tools import senna
+import aspell
 
 path = unicode(os.environ["SENNAPATH"])
 sp = senna.SennaWrap(path)
+speller = aspell.Speller('lang', 'en')
 
 
 class DocumentFeatures(object):
@@ -47,12 +49,15 @@ class DocumentFeatures(object):
     def pipeline(self):
         self.preprocess()
         self.doc_bow()
-        self.avg_length()
+        # self.avg_length()
         self.doc_ngram()
+        self.doc_spell()
         return self.features
 
     def preprocess(self):
-        self.sentfeatures = [getsf(s) for s in self.doc]
+        _sf = [getsf(s) for s in self.doc]
+        self.sentfeatures = [s[0] for s in _sf]
+        self.numspellerrors = [s[1] for s in _sf]
         self.docfeatures = reduce(lambda x,y: x+y, [d.items() for d in self.sentfeatures])
 
     def doc_bow(self):
@@ -75,11 +80,20 @@ class DocumentFeatures(object):
         docngram = {id:v for (id, v) in self.docfeatures if id.startswith("Ngram")}
         self.features.update(docngram)
 
+    def doc_spell(self):
+        numsplerr = sum(self.numspellerrors)
+        if numsplerr == 0:
+            self.features.update({"SpellError_None":1})
+        for _t in range(2, 50, 2):
+            if numsplerr >= _t:
+                self.features.update({"SpellError_>%d"%_t:1})
+
 
 def getsf(tags=[]):
     sf = SentenceFeatures(tags)
     f = sf.getfeatures()
-    return f
+    num_spellerror = sf.spellerror
+    return f, num_spellerror
 
 
 class SentenceFeatures(object):
@@ -129,6 +143,7 @@ class SentenceFeatures(object):
     def getfeatures(self):
         self.bow()
         self.ngrams()
+        self.spell()
         return self.features
 
     def gen_fn(self, l=None):
@@ -177,15 +192,22 @@ class SentenceFeatures(object):
         self.features.update(bowf)
         self.features.update(bowposf)
 
-    def ngrams(self, ns=[2,3]):
+    def ngrams(self, ns=[2]):
+        _p = ["/".join(t) for t in zip(self.SUF, self.POS)]
         for n in ns:
             ngf = {"Ngram(N={})_{}".format(n, "_".join(t)) : 1
                     for t in ngrams(self.SUF, n)}
-            ngfp = {"Ngram(N={})_{}".format(n, "_".join(t)) : 1
-                    for t in ngrams(self.POS, n)}
+            ngfp = {"NgramP(N={})_{}".format(n, "_".join(t)) : 1
+                    for t in ngrams(_p, n)}
         self.features.update(ngf)
         self.features.update(ngfp)
 
+    def spell(self):
+        _c = 0
+        _sple = [1 for s in self.SUF if (not s.istitle() and not speller.check(s))]
+        _c += sum(_sple)
+        # self.features.update({"SpellError_{}".format(_c) : 1})
+        self.spellerror = _c
 
 if __name__=='__main__':
     pass

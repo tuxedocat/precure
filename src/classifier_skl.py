@@ -22,7 +22,7 @@ from random import shuffle, randrange
 import glob
 import json
 try: 
-    from sklearn.linear_model import SGDClassifier, Perceptron
+    from sklearn.linear_model import SGDClassifier, Perceptron, LogisticRegression
     from sklearn.feature_extraction import DictVectorizer
     from sklearn.svm import NuSVC, SVC, SVR
     from sklearn import preprocessing
@@ -30,15 +30,17 @@ try:
     import scipy as sp
     from tools import sparse_matrices
     from feature_extractor import DocumentFeatures, SentenceFeatures
+    import progressbar
 except ImportError:
-    print "Prerequisite: This requires 'sklearn', 'numpy', 'scipy'"
+    print "Prerequisite: This requires 'sklearn', 'numpy', 'scipy', 'progressbar'"
     raise
+
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
 chunk_gen = lambda x,y: (x[i:i+y] for i in range(0,len(x),y))
 
 
-def train_model(path_dat=None, path_model=None):
+def train_model(path_dat=None, path_model=None, model_type="LR"):
     """
     Read JSON files with some degrees of fluency 
         (each file has different fluency, e.g. 0_low.json, 1_mid.json)
@@ -47,14 +49,21 @@ def train_model(path_dat=None, path_model=None):
                "coef0":0.0, "shrinking":True, 
                "probability":True, "tol":0.001, "cache_size":1024, 
                "verbose":True }
-
     # Simply load files in dictionary order
     # (so files must have the same order of fluency level)
     files = glob.glob(path_dat+"*.json")
     dat = [json.load(open(f,'r')) for f in files]
     X, Y, fmap = make_cases(dat)
-    clsf = SklearnClassifier(svropts)
-    clsf.trainSVR(X, Y)
+    if model_type == "LR":
+        clsf = SklearnClassifier()
+        clsf.trainLR(X, Y)
+    elif model_type == "SGD":
+        raise NotImplementedError
+    elif model_type == "SVR":
+        clsf = SklearnClassifier(svropts)
+        clsf.trainSVR(X, Y)
+    else:
+        raise NotImplementedError
     try:
         os.makedirs(os.path.abspath(path_model))
     except OSError as exception:
@@ -98,21 +107,26 @@ def process_each_cat(cat=None, docs=[]):
     _s: list of integers
         scores
     """
-    assignment = [20, 70, 100]
+    assignment = [20, 60, 100]
     _f = []
     _s = []
     _p = []
-    for d in docs:
-        fe = DocumentFeatures(d, parse=True)
+    widgets = ['Extracting features... for category {}: done for '.format(cat), progressbar.Counter(), ' doc(s), (', progressbar.Timer(), ')']
+    pbar = progressbar.ProgressBar(widgets=widgets, maxval=len(docs)).start()
+    for n, d in enumerate(docs):
+        fe = DocumentFeatures(d, parse=False)
         fe.pipeline()
         _f.append(fe.features)
         _p.append(fe.doc)
         b = assignment[cat]
-        s = randrange(b-10, b+10)/100.0
+        # s = randrange(b-10, b+10)/100.0
+        s = b/100.0
         _s.append(s)
+        pbar.update(n+1)
     assert len(_f)==len(_s)
-    import json
-    json.dump(_p, open("../parsed/{}.json".format(cat), "w"))
+    # import json
+    # json.dump(_p, open("../parsed/{}.json".format(cat), "w"))
+    pbar.finish()
     return _f, _s
 
 
@@ -139,6 +153,10 @@ class SklearnClassifier(object):
     def trainSVR(self, X=None, Y=None):
         svr = SVR(**self.opts)
         self.model = svr.fit(X, Y)
+
+    def trainLR(self, X=None, Y=None):
+        lr = LogisticRegression()
+        self.model = lr.fit(X, Y)
 
     def transform(self, X=None):
         if self.fmap:
