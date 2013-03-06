@@ -28,7 +28,6 @@
 				mode : "textareas",
 				theme : "advanced",
 				forced_root_block : false,
-
 				height : "480",
 				content_css : "custom.css",
 				plugins : "print,searchreplace,paste,fullscreen",
@@ -55,45 +54,44 @@
 <body>
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">CICP2012-Precure</a>
-          <div class="nav-collapse">
-            <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#precure">Try!</a></li>
-              <li><a href="#description">Description</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
+	<div class="navbar navbar-fixed-top">
+	  <div class="navbar-inner">
+		<div class="container">
+		  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </a>
+		  <a class="brand" href="#">CICP2012-Precure</a>
+		  <div class="nav-collapse">
+			<ul class="nav">
+			  <li class="active"><a href="#">Home</a></li>
+			  <li><a href="#precure">Try!</a></li>
+			  <li><a href="#description">Description</a></li>
+			  <li><a href="#about">About</a></li>
+			  <li><a href="#contact">Contact</a></li>
+			</ul>
+		  </div><!--/.nav-collapse -->
+		</div>
+	  </div>
+	</div>
 
-    <div class="container">
+	<div class="container">
 
-      <!-- Main hero unit for a primary marketing message or call to action -->
-      <div class="hero-unit" style="background: url(./img/top1.jpg) no-repeat right;">
-        <h1>コーパスが、<br>その英語はなんか変かも...<br>って言ってたんだけど、どうする?</h1>
-        <p>Precureは学術論文の英語添削のためのアプリケーションです。</p>
-        <p>英文中のPredicates(述語)の用例をコーパスから得た統計的特徴量によって推薦します。</p>
-        <p>この日本語もちょっと変だよ!!!</p>
-        <p><a class="btn btn-primary btn-large" href="#precure">Try it now!! &raquo;</a></p>
-      </div>
+	  <!-- Main hero unit for a primary marketing message or call to action -->
+	  <div class="hero-unit" style="background: url(./img/top1.jpg) no-repeat right;">
+		<h1>Mr. Corpus said, <br>"your English is something funny."<br></h1>
+		<p>This app. is for scoring fluency of input sentences.</p>
+		<p>How high can you achieve? Let's try!</p>
+		<p><a class="btn btn-primary btn-large" href="#precure">Try it now!! &raquo;</a></p>
+	  </div>
 
 	<div id="warning" style="visibility : hidden; font-size:100%; color:red;">
 	</div>
 	<script type="text/javascript">
 		var userAgent = window.navigator.userAgent.toLowerCase();
-		var announce = "現在，Google Chromeのみに対応しております<br /><br />" 
-				+ "あなたのブラウザは " + userAgent + " です";
+		var announce = "Currently our application can work only on Google Chrome.<br /><br />" 
+				+ "It seems your browser is " + userAgent + " .";
 		if (! (userAgent.indexOf("chrome") > -1)) {
 			$("#warning").css('visibility', 'visible')
 				.html(announce);
@@ -101,56 +99,58 @@
 	</script>
 
 
-      <div class="page-header">
-        <a><h1 id="precure">Let's try!! <small>あなたの英語はネイティブっぽいでしょうか?</small></h1></a>
-      </div>
-        <div class="hero-unit">
+	<div class="page-header">
+		<a><h1 id="precure">Let's check your writing fluency!! <small>あなたの英語はネイティブっぽいでしょうか?</small></h1></a>
+	</div>
 
+	<div class="hero-unit">
 		<form id="editarea" method="post" onsubmit="return false;"  style="width:800px; float:left;">
 			<textarea id="elm1" name="elm1" rows="15" cols="80" style="width: 100%" class="tinymce"></textarea>
 		</form>
-		<div style="float: left; width:200px;">
-			<a href="javascript:;" onclick="myrefresh();return false;">[Refresh]</a>
-			<div id='fluency_chart'></div>
-			<div id='predicates_list'>
-			</div>
+
+		<!-- <div style="float: left;"></div> -->
+		<div style="float: right;">
+			<!-- <a class="btn btn-primary btn-large" href="javascript:;" onclick="myrefresh();return false;" >Check this!</a> -->
+			<div id='mrcorpus' onclick="myrefresh();return false;"><img src="img/mrcorpus.png" class="img-polaroid"/></div>
+			<a class="btn btn-primary btn-large" href="javascript:;" onclick="myrefresh();return false;">Click to check!</a>
+			<div id='fluency_chart'><h2>Fluency Score is ...</h2></div>
+			<!-- <div id='predicates_list'></div> -->
 		</div>
 
-		<div style="clear: both;">
-		</div>
-<!--                                This is some example text that you can edit inside the &lt;strong&gt;TinyMCE editor&lt;/strong&gt;.-->
+		<div style="clear: both;"> </div>
+<!--This is some example text that you can edit inside the &lt;strong&gt;TinyMCE editor&lt;/strong&gt;.-->
 
-		<a href="javascript:;" onclick="alert(tinyMCE.get('elm1').getContent());return false;">[Get contents]</a>
-		<a href="javascript:;" onclick="alert(tinyMCE.get('elm1').getContent({format:'text'}));return false;">[Get plain contents]</a>
+		<!-- <a href="javascript:;" onclick="alert(tinyMCE.get('elm1').getContent());return false;">[Get contents]</a> -->
+		<!-- <a href="javascript:;" onclick="alert(tinyMCE.get('elm1').getContent({format:'text'}));return false;">[Get plain contents]</a> -->
+	</div>
 
-        </div>
-
-      <div class="page-header" id="description">
-        <h1>Description <small>説明</small></h1>
-      </div>
-        <div class="hero-unit">
-        	<h2>機能</h2>
+	  <div class="page-header" id="description">
+		<h1>Description: <small>説明</small></h1>
+	  </div>
+		
+		<div class="hero-unit">
+			<h2>Functions: 機能</h2>
 		<ul>
-			<li>スペルチェック (誤りのある単語に下線，ホバーすると訂正候補を表示)</li>
+			<li>Spell checker (mark errors by underlines, and show corrections when hovering mouse cursor) <br>
+				スペルチェック (誤りのある単語に下線，ホバーすると訂正候補を表示)</li>
 		</ul>
 
-
-        	<h2>既知の不具合</h2>
+			<h2>Known issues: 既知の不具合</h2>
 		<ul>
-			<li>Google chromeでしか動きません</li>
+<!-- 			<li>Google chromeでしか動きません</li> -->
 			<li>Google chromeでは&lt;&gt;が消えてしまう</li>
 			<li>firefoxでは，&lt;br /&gt;が取得できない</li>
 			<li>IEでは，カーソル制御ができない</li>
 
 			<li>アルファベット以外を入力するとエラーになる</li>
 		</ul>
-        </div>
+		</div>
 
 
-      <div class="page-header" id="about">
-        <h1>About <small>  本アプリケーションについて</small></h1>
-      </div>
-        <div class="hero-unit">
+	  <div class="page-header" id="about">
+		<h1>About: <small>本アプリケーションについて</small></h1>
+	  </div>
+		<div class="hero-unit">
 		<p>
 			本アプリケーションは，
 			NAIST Creative and International Competitiveness Project
@@ -158,12 +158,17 @@
 			(2012年6月～2013年3月)
 			の成果です
 		</p>
-        </div>
+		<p>
+			This project is granted by NAIST Creative and International Competitiveness Project, 
+			which is an encouragement program organized by Department of Information Science of Nara Institute of Science and Technology.
+			(2012.6-2013.3, "The corpus said, the English in your paper is funny.")
+		</p>
+		</div>
 
-      <div class="page-header" id="contact">
-        <h1>Contact<small>連絡先</small></h1>
-      </div>
-        <div class="hero-unit">
+	  <div class="page-header" id="contact">
+		<h1>Contact: <small>連絡先</small></h1>
+	  </div>
+		<div class="hero-unit">
 		<p>
 			<a href="http://www.naist.jp/">奈良先端科学技術大学院大学</a>
 			<a href="http://isw3.naist.jp/">情報科学研究科</a>
@@ -175,15 +180,15 @@
 				<li>坂口 慶祐 (Keisuke Sakaguch)</li>
 			</ul>
 		</p>
-        </div>
+		</div>
 
-      <hr>
+	  <hr>
 
 <!--      <footer>-->
 <!--        <p>&copy; CICP2012 The Graduate School of Information Science, NAIST</p>-->
 <!--      </footer>-->
 
-    </div> <!-- /container -->
+	</div> <!-- /container -->
 
 
 <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->

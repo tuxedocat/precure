@@ -230,7 +230,6 @@
 	function myrefresh() {
 		var ed = tinyMCE.get('elm1');
 		var txt = ed.getContent({format:'text'});
-
 		if (myBuffer != txt){ //text is changed
 			var new_pas_html = "";
 			myBuffer = txt; //update buffer
@@ -285,9 +284,22 @@
 			//getScore
 			var myScore = getScore(mySentences);
 			drawChart(myScore);
+			if (myScore<30)
+				{
+				var msg = "Hmm... you need to study quite hard.";
+				}
+			else if (myScore<70)
+				{
+				var msg = "Fine, not that bad! But I can see some mistakes...";
+				}
+			else
+				{
+				var msg = "Excellent, I couldn't find the slightest mistakes.";
+				}
+			$("#mrcorpus").popover({title: 'Mr. Corpus says...', content: "<h3>" + msg + "</h3>"});
+			$("#mrcorpus").popover('destroy');
 		};
-
-		return true; // Continue handling
+		return true; // Continue handling[
 	};
 
 	function myHandleEvent(e) {
