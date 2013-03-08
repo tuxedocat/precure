@@ -10,7 +10,7 @@ import json
 
 import BaseHTTPServer
 
-import responce
+import response
 
 import sys
 import os
@@ -42,7 +42,7 @@ class Server(BaseHTTPServer.HTTPServer):
         self.model.load_fmap(M_PATH)
 
     def __common(self, query, callback, mymethod):
-        res = responce.Response()
+        res = response.Response()
         if (query):
             res.headers = {"Content-Type" : "text/javascript"}
             out = {}
