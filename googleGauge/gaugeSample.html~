@@ -1,0 +1,31 @@
+<html>
+<head>
+<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+<script type='text/javascript'>
+    google.load('visualization', '1', {packages:['gauge']});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+        ['Label', 'Value'],
+        ['Fluency', 80],
+        ['Fluency', 80],
+        ]);
+
+        var options = {
+        //width: 400, height: 120,
+        width: 400, height: 400,
+        redFrom: 0, redTo: 33.3,
+        yellowFrom:33.3, yellowTo: 66.6,
+        greenFrom:66.6, greenTo: 100,
+        minorTicks: 5
+        };
+
+        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+        chart.draw(data, options);
+        }
+</script>
+</head>
+<body>
+<div id='chart_div'></div>
+</body>
+</html>

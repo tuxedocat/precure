@@ -17,7 +17,7 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s',
                     level=logging.DEBUG)
 import os
 import sys
-from collections import defaultdict
+from collections import defaultdict, Counter
 from pprint import pformat
 from numpy import array
 import cPickle as pickle
@@ -62,7 +62,9 @@ class DocumentFeatures(object):
 
     def doc_bow(self):
         # Get tuples from sentence-wise BOW, and then flatten them as a list
-        docbow = {id:v for (id, v) in self.docfeatures if id.startswith("BOW")}
+        # docbow = {id:v for (id, v) in self.docfeatures if id.startswith("BOW")}
+        bow_c = Counter([id for (id, v) in self.docfeatures if id.startswith("BOW")])
+        docbow = {id:c for (id, c) in bow_c.iteritems()}
         self.features.update(docbow)
 
     def avg_length(self):
@@ -192,7 +194,7 @@ class SentenceFeatures(object):
         self.features.update(bowf)
         self.features.update(bowposf)
 
-    def ngrams(self, ns=[2]):
+    def ngrams(self, ns=[2,3,5]):
         _p = ["/".join(t) for t in zip(self.SUF, self.POS)]
         for n in ns:
             ngf = {"Ngram(N={})_{}".format(n, "_".join(t)) : 1

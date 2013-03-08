@@ -25,7 +25,7 @@ def trsvm_test():
 @attr("svmtest")
 def predsvm_test():
     # modelpath = "test/models"
-    modelpath = "../model_LR"
+    modelpath = "../model_SGD"
     path_test = "test/testcase/test.json"
     # path_test = "../corpora/0_low.json"
     # path_test = "../corpora/2_high.json"

@@ -230,7 +230,6 @@
 	function myrefresh() {
 		var ed = tinyMCE.get('elm1');
 		var txt = ed.getContent({format:'text'});
-
 		if (myBuffer != txt){ //text is changed
 			var new_pas_html = "";
 			myBuffer = txt; //update buffer
@@ -285,17 +284,44 @@
 			//getScore
 			var myScore = getScore(mySentences);
 			drawChart(myScore);
+            var dialogue = function(myScore){
+                if (myScore<30)
+                    {
+                    return "Hmm... you need to study quite hard.";
+                    }
+                else if (myScore<70)
+                    {
+                    return "Fine, not that bad! But I can see some mistakes...";
+                    }
+                else
+                    {
+                    return "Excellent, I couldn't find the slightest mistakes.";
+                    }
+            };
+            var msg = dialogue(myScore) 
+            // This function is not working as I thought 
+            $('#mrcorpus').hover(function(){
+                $('#mrcorpus').popover({
+                placement: 'top',
+                title: 'Mr. Corpus says...',
+                content: function(){
+                    var message ="<h3>" + msg + "</h3>";
+                        return message;
+                }
+                });
+                $('#mrcorpus').popover('show');
+            });
+            // To update content of popover directly...
+            $('#mrcorpus').data('popover').options.content = "<h3>" + msg + "</h3>";
 		};
-
-		return true; // Continue handling
+		return true; // Continue handling[
 	};
 
 	function myHandleEvent(e) {
 		//XXX
-//                myrefresh();
+        //myrefresh();
 		return true; // Continue handling
 	};
-
 
 		myBuffer = ''; //save old plain text
 		myDecorationBank = []; //save old plain sentences
