@@ -284,30 +284,44 @@
 			//getScore
 			var myScore = getScore(mySentences);
 			drawChart(myScore);
-			if (myScore<30)
-				{
-				var msg = "Hmm... you need to study quite hard.";
-				}
-			else if (myScore<70)
-				{
-				var msg = "Fine, not that bad! But I can see some mistakes...";
-				}
-			else
-				{
-				var msg = "Excellent, I couldn't find the slightest mistakes.";
-				}
-			$("#mrcorpus").popover({title: 'Mr. Corpus says...', content: "<h3>" + msg + "</h3>"});
-			$("#mrcorpus").popover('destroy');
+            var dialogue = function(myScore){
+                if (myScore<30)
+                    {
+                    return "Hmm... you need to study quite hard.";
+                    }
+                else if (myScore<70)
+                    {
+                    return "Fine, not that bad! But I can see some mistakes...";
+                    }
+                else
+                    {
+                    return "Excellent, I couldn't find the slightest mistakes.";
+                    }
+            };
+            var msg = dialogue(myScore) 
+            // This function is not working as I thought 
+            $('#mrcorpus').hover(function(){
+                $('#mrcorpus').popover({
+                placement: 'top',
+                title: 'Mr. Corpus says...',
+                content: function(){
+                    var message ="<h3>" + msg + "</h3>";
+                        return message;
+                }
+                });
+                $('#mrcorpus').popover('show');
+            });
+            // To update content of popover directly...
+            $('#mrcorpus').data('popover').options.content = "<h3>" + msg + "</h3>";
 		};
 		return true; // Continue handling[
 	};
 
 	function myHandleEvent(e) {
 		//XXX
-//                myrefresh();
+        //myrefresh();
 		return true; // Continue handling
 	};
-
 
 		myBuffer = ''; //save old plain text
 		myDecorationBank = []; //save old plain sentences

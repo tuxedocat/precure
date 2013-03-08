@@ -22,7 +22,7 @@ from random import shuffle, randrange
 import glob
 import json
 try: 
-    from sklearn.linear_model import SGDClassifier, Perceptron, LogisticRegression
+    from sklearn.linear_model import SGDRegressor, Perceptron, LogisticRegression
     from sklearn.feature_extraction import DictVectorizer
     from sklearn.svm import NuSVC, SVC, SVR
     from sklearn import preprocessing
@@ -58,7 +58,8 @@ def train_model(path_dat=None, path_model=None, model_type="LR"):
         clsf = SklearnClassifier()
         clsf.trainLR(X, Y)
     elif model_type == "SGD":
-        raise NotImplementedError
+        clsf = SklearnClassifier()
+        clsf.trainSGD(X, Y)
     elif model_type == "SVR":
         clsf = SklearnClassifier(svropts)
         clsf.trainSVR(X, Y)
@@ -107,7 +108,7 @@ def process_each_cat(cat=None, docs=[]):
     _s: list of integers
         scores
     """
-    assignment = [20, 60, 100]
+    assignment = [20, 50, 90]
     _f = []
     _s = []
     _p = []
@@ -143,7 +144,7 @@ class SklearnClassifier(object):
         self.multicpu = 1
 
     def trainSGD(self, X=None, Y=None):
-        sgd = SGDClassifier(**self.opts)
+        sgd = SGDRegressor(loss="huber", verbose=1, n_iter=20, shuffle=True)
         self.model = sgd.fit(X, Y)
 
     def trainSVM(self, X=None, Y=None):
@@ -252,9 +253,11 @@ if __name__=='__main__':
                     help="path to trained classifier model directory")
     ap.add_argument("-d", '--dataset_path', action="store",
                     help="path_to_dir of JSON files")
+    ap.add_argument("-m", '--model_type', action="store",
+                    help="model type")
     args = ap.parse_args()
     if args.dataset_path and args.model_save_dir:
-        train_model(path_dat=args.dataset_path, path_model=args.model_save_dir)
+        train_model(path_dat=args.dataset_path, path_model=args.model_save_dir, model_type=args.model_type)
     else:
         ap.print_help()
     quit()
