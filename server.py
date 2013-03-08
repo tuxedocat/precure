@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 """
+renamed module import (yu-s)
 """
-__author__ = 'Yuta Hayashibe' 
+__author__ = 'Yuta Hayashibe'
 __version__ = ""
 __copyright__ = ""
 __license__ = "GPL v3"
@@ -34,8 +35,8 @@ def main(opts):
 
     import os
     import web.base
-    import web.correcter
-    httpd = web.correcter.Server(opts, server_address, web.base.Server)
+    import web.corrector
+    httpd = web.corrector.Server(opts, server_address, web.base.Server)
     static_dir = os.path.dirname( os.path.abspath( __file__ ) ) + "/web/static"
 
     if opts.root:
